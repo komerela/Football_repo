@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'accounts',
     'fixtures',
     'django_celery_beat',
+    'psbackend',
 ]
 
 MIDDLEWARE = [
@@ -60,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
 ]
 
 ROOT_URLCONF = 'fifachampsonline.urls'
@@ -161,6 +163,10 @@ stripe.api_key = 'STRIPE_SECRET_KEY'
 
 STRIPE_SECRET_KEY = 'your_secret_key_here'
 
+#  Session expiry
+SESSION_COOKIE_AGE = 300 # 5 minutes
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
 
 # This configures Celery to use Redis as the message broker, defines the send-reminder-emails 
 # task to run every 12 hours, and maps it to the send_reminder_emails task you defined earlier.
@@ -177,6 +183,7 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': crontab(minute=0, hour='*/12')  # Runs every 12 hours
     },
 }
+
 
 # Finally, start the Celery worker and beat processes by running 
 # the following commands in separate terminal windows:

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Fixture, Player, Item, HeadToHead, Matches, Purchase, Result, Booking
+from .models import Fixture, Player, Item, HeadToHead, Matches, Purchase, Result, Booking, Cart
 
 # Register your models here.
 
@@ -11,3 +11,4 @@ admin.site.register(Purchase)
 admin.site.register(Matches)
 admin.site.register(Result)
 admin.site.register(Booking)
+admin.site.register(Cart)

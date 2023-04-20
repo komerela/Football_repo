@@ -2,7 +2,7 @@
 from django.views.generic import CreateView
 from django.urls import reverse_lazy, reverse
 from fixtures.models import Fixture, Booking, Player, Item, HeadToHead, Matches, Result, Purchase, Cart
-from fixtures.forms import HeadToHeadForm, PurchaseForm
+from fixtures.forms import HeadToHeadForm, PurchaseForm, HeadToHeadRequestForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
