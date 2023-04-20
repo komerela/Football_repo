@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Fixture List</h1>
+  <ul>
+    {% for fixture in fixtures %}
+      <li>
+        <a href="{% url 'fixture-detail' fixture.pk %}">
+          {{ fixture.home_team }} vs {{ fixture.away_team }} - {{ fixture.date }}
+        </a>
+      </li>
+    {% empty %}
+      <li>No fixtures available.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
+

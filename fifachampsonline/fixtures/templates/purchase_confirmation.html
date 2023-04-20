@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Thank you for your purchase!</h1>
+  <p>You have successfully purchased {{ purchase.item.name }} for ${{ purchase.price }}.</p>
+{% endblock %}

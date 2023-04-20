@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ fixture.team1 }} vs {{ fixture.team2 }}</h1>
+  <p>Date: {{ fixture.date }}</p>
+  <p>Time: {{ fixture.time }}</p>
+  <p>Venue: {{ fixture.venue }}</p>
+{% endblock %}

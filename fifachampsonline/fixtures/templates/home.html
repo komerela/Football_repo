@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="card-title">Upcoming Fixtures</h3>
+                    <video width="320" height="240" controls>
+                        <source src="{{ MEDIA_URL }}WC_glitch_bumper.mp4" type="video/mp4">
+                      </video>
+                      
+                </div>
+                <div class="card-body">
+                    {% for fixture in upcoming_fixtures %}
+                    <div class="media">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1">{{ fixture.home_team }} vs {{ fixture.away_team }}</h5>
+                            <p class="text-muted mb-0"><i class="fa fa-calendar"></i> {{ fixture.date|date:"l, F d, Y" }} at {{ fixture.time }}</p>
+                            <p class="text-muted mb-0"><i class="fa fa-map-marker"></i> {{ fixture.venue }}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    {% empty %}
+                    <p>No upcoming fixtures.</p>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="card-title">Shop</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for item in shop_items %}
+                        <div class="col-md-4">
+                            <div class="card mb-4">
+                                <img class="card-img-top" src="{{ item.image.url }}" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ item.title }}</h5>
+                                    <p class="card-text">{{ item.description }}</p>
+                                    <a href="{% url 'item_detail' item.pk %}" class="btn btn-primary">View Item</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <p>No items available in the shop.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="card-title">Points Table</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">User</th>
+                                <th scope="col">Points</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if point_table %}
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Email</th>
+                                        <th>Total Points</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user in point_table %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ user.email }}</td>
+                                            <td>{{ user.total_points }}</td>
+                                        </tr>
+                                    {% empty %}
+                                        <tr>
+                                            <td colspan="3">No users available in the points table.</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endif %}
+                        
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

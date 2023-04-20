@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Error Processing Payment</h1>
+{% if error %}
+<p>{{ error.message }}</p>
+{% else %}
+<p>An error occurred while processing your payment. Please try again later.</p>
+{% endif %}
+{% endblock %}

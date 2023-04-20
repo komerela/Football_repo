@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% comment %} 
+This code uses Stripe Elements to collect the user's card details and initiate the payment process. 
+Once the payment is completed successfully, the user is redirected to a success page, which is not 
+included in this code snippet. 
+Note that this template extends the base.html template and includes a Stripe payment form that handles the card information and 
+submits it to the server using AJAX. The template also includes JavaScript code that uses the Stripe.js library to create a 
+PaymentMethod object and send it to the server for processing. If the payment is successful, 
+the template redirects the user to the success page using window.location.href
+{% endcomment %}
+
+{% block content %}
+  <h1>Payment processing</h1>
+
+  <!-- Stripe payment form -->
+  <form id="payment-form">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="buyer">Buyer name:</label>
+      {{ form.buyer }}
+    </div>
+    <div class="form-group">
+      <label for="price">Price:</label>
+      {{ form.price }}
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      {{ form.email }}
+    </div>
+    <div class="form-group">
+      <label for="phone_number">Phone number:</label>
+      {{ form.phone_number }}
+    </div>
+
+    <!-- Stripe elements -->
+    <div id="card-element"></div>
+    <div id="card-errors"></div>
+
+    <!-- Payment button -->
+    <button id="submit-payment">Pay Now</button>
+  </form>
+
+  <script src="https://js.stripe.com/v3/"></script>
+  <script>
+    // Set up Stripe.js and Elements
+    var stripe = Stripe('{{ stripe_key }}');
+    var elements = stripe.elements();
+
+    // Create an instance of the card Element
+    var card = elements.create('card');
+
+    // Add an instance of the card Element into the `card-element` <div>
+    card.mount('#card-element');
+
+    // Handle form submission
+    var form = document.getElementById('payment-form');
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      var cardElement = elements.getElement('card');
+
+      // Create a PaymentMethod object
+      stripe.createPaymentMethod({
+        type: 'card',
+        card: cardElement,
+      }).then(function(result) {
+        if (result.error) {
+          // Display error message
+          var errorElement = document.getElementById('card-errors');
+          errorElement.textContent = result.error.message;
+        } else {
+          // Send PaymentMethod id and form data to server for processing
+          var formData = new FormData(form);
+          formData.append('payment_method_id', result.paymentMethod.id);
+
+          fetch('{% url 'process_payment' fixture_id=fixture.id booking_id=booking.id %}', {
+            method: 'POST',
+            headers: {
+              'X-CSRFToken': '{{ csrf_token }}',
+            },
+            body: formData,
+          }).then(function(response) {
+            if (response.ok) {
+              // Redirect to success page
+              window.location.href = "{% url 'fixtures:payment_success' %}";
+            } else {
+              // Display error message
+              response.text().then(function(error) {
+                var errorElement = document.getElementById('card-errors');
+                errorElement.textContent = error;
+              });
+            }
+          });
+        }
+      });
+    });
+  </script>
+{% endblock %}

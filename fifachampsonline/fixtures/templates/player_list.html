@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Players</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>PS Username</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>Team Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for player in players %}
+        <tr>
+          <td>{{ player.name }}</td>
+          <td>{{ player.ps_username }}</td>
+          <td>{{ player.email }}</td>
+          <td>{{ player.phone_number }}</td>
+          <td>{{ player.team_name }}</td>
+          <td>
+            <a href="{% url 'player-detail' player.pk %}">View</a>
+            <a href="{% url 'player-update' player.pk %}">Update</a>
+            <a href="{% url 'player-delete' player.pk %}">Delete</a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="6">No players found.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

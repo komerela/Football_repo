@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ player.name }}</h1>
+  <p><strong>PS Username:</strong> {{ player.ps_username }}</p>
+  <p><strong>Email:</strong> {{ player.email }}</p>
+  <p><strong>Phone Number:</strong> {{ player.phone_number }}</p>
+  <p><strong>Team Name:</strong> {{ player.team_name }}</p>
+  <p><strong>Fixture:</strong> {{ player.fixture }}</p>
+  <p><a href="{% url 'player-update' player.pk %}">Update player</a></p>
+  <p><a href="{% url 'player-delete' player.pk %}">Delete player</a></p>
+{% endblock %}
