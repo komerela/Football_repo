@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'fixtures',
     'django_celery_beat',
     'psbackend',
+    'chatbot',
 ]
 
 MIDDLEWARE = [
