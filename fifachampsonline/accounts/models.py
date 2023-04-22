@@ -2,7 +2,6 @@ from django.shortcuts import redirect
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.db import models
-
 from psbackend.models import PSUsername
 
 class UserProfile(models.Model):
