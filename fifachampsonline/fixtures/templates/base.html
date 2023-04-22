@@ -48,6 +48,11 @@
     <div class="container">
       {% block content %}{% endblock %}
     </div>
+
+       <!-- Your chatbot HTML goes here -->
+    <div id="chatbot">
+      {% include 'chatbot.html' %}
+    </div>
         <!-- Include the jQuery library and your custom JavaScript file -->
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

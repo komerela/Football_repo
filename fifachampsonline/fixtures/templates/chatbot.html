@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+<ul>
+    {% for response in responses %}
+        <li>{{ response.input }} => {{ response.output }}</li>
+    {% endfor %}
+    </ul>
+    
+    <form method="post" action="{% url 'chatbot' %}">
+        {% csrf_token %}
+        <input type="text" name="message" placeholder="Type a message...">
+        <button type="submit">Send</button>
+    </form>
+    
+    <div id="response-container"></div>
+    
+    <script>
+    const form = document.querySelector('form');
+    const container = document.querySelector('#response-container');
+    
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const response = await fetch(e.target.action, {
+            method: 'POST',
+            body: formData
+        }).then(res => res.json());
+        container.innerHTML += `<p>You: ${formData.get('message')}</p><p>Chatbot: ${response.message}</p>`;
+        form.reset();
+    });
+    </script>
+    
