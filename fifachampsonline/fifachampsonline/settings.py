@@ -25,6 +25,20 @@ settings.configure()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+#  Initialize environment variables
+
+import environ
+
+env = environ.Env()
+
+environ.Env.read_env()
+
+SECRET_KEY = os.environ.get('SECRET_KEY')
+
+# Chatbot API KEY
+
+api_key = os.environ.get('OPENAI_API_KEY')
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -99,11 +113,11 @@ WSGI_APPLICATION = 'fifachampsonline.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'footdb',
-        'USER': 'km',
-        'PASSWORD': 'koome_123',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': env('DATABASE_NAME'),
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASS'),
+        'HOST': env('DATABASE_HOST'),
+        'PORT': env('DATABASE_PORT'),
     }
 }
 
