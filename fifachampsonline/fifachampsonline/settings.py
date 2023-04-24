@@ -15,6 +15,7 @@ from django.conf import settings
 from celery.schedules import crontab
 import os
 import stripe
+import environ
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'fifachampsonline.settings')
 settings.configure()
@@ -27,7 +28,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 #  Initialize environment variables
 
-import environ
 
 env = environ.Env()
 
