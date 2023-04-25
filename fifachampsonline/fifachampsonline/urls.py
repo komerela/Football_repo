@@ -35,14 +35,17 @@ from .views import (PlayerDetailView,
                     HeadToHeadView,
                     HeadToHeadRequestView, 
                     RestrictedView,
-                    HomeView,
+                    ChatbotView,
                     error_view,
                     player_info,
                     cart_view,
                     add_to_cart,
                     item_detail,)
 
+
+
 app_name = 'fixtures'
+app_name = 'chatbot'
 
 # Define a function to check if the user is staff
 def user_is_staff(user):
@@ -52,7 +55,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('accounts.urls')),
-    path('', HomeView.as_view(), name='home'),
+    path('', views.home, name='home'),
     path('restricted/', user_passes_test(user_is_staff)(RestrictedView.as_view()), name='restricted-view'),
     path('fixture/', FixtureListView.as_view(), name='fixture-list'),
     path('fixture/<int:fixture_id>/', FixtureDetailView.as_view(), name='fixture-detail'),
@@ -76,6 +79,7 @@ urlpatterns = [
     path('players/<int:pk>/delete/', user_passes_test(user_is_staff)(PlayerDeleteView.as_view()), name='player-delete'),
     path('players/<int:player_id>/', player_info, name='player-info'),
     path('accounts/profile/', ProfileView.as_view(), name='profile'),
+    path('chatbot/', ChatbotView.as_view(), name='chatbot'),
     path('error/', error_view, name='error'),
 ]
 

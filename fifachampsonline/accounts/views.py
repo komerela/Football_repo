@@ -17,6 +17,8 @@ from .forms import UserForm
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
 from .models import UserProfile
+from django.views.generic import RedirectView
+
 
 class UserProfileDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = UserProfile
@@ -74,10 +76,10 @@ class MyLoginView(LoginView):
         response = super().form_valid(form)
         messages.success(self.request, "You have successfully logged in!")
         return response
-    
 
-class MyLogoutView(LogoutView):
-    next_page = 'home'
+class MyLogoutView(RedirectView):
+    url = reverse_lazy('logout')
+    template_name = 'logout.html'
 
 class UserRetrieveView(RetrieveAPIView):
     queryset = User.objects.all()

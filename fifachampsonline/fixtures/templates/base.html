@@ -46,18 +46,47 @@
         <span id="timer"></span>
     </div>
     <div class="container">
-      {% block content %}{% endblock %}
+      {% block content %}
+      <h1>Chatbot</h1>
+<ul>
+    {% for response in responses %}
+        <li>{{ response.input }} => {{ response.output }}</li>
+    {% endfor %}
+</ul>
+    
+    <form method="post" action="{% url 'chatbot' %}">
+        {% csrf_token %}
+        <input type="text" name="message" placeholder="Type a message...">
+        <button type="submit">Send</button>
+    </form>
+    
+    <div id="response-container"></div>
+    
+    <script>
+    const form = document.querySelector('form');
+    const container = document.querySelector('#response-container');
+    
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const response = await fetch(e.target.action, {
+            method: 'POST',
+            body: formData
+        }).then(res => res.json());
+        container.innerHTML += `<p>You: ${formData.get('message')}</p><p>Chatbot: ${response.message}</p>`;
+        form.reset();
+    });
+    var default_url = "{% url 'chatbot' %}";
+</script>
+      {% endblock content %}
     </div>
 
-       <!-- Your chatbot HTML goes here -->
-    <div id="chatbot">
-      {% include 'chatbot.html' %}
-    </div>
         <!-- Include the jQuery library and your custom JavaScript file -->
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{% static 'js/logout-timer.js' %}"></script>
+    <script src="{% static 'js/idle.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </body>

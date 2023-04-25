@@ -11,19 +11,27 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views import View
 from django.views.decorators.http import require_POST
 from django.utils.decorators import method_decorator
-from django.conf import settings
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from fixtures.serializers import ItemSerializer
-from accounts.models import User
+from accounts.models import User, UserProfile
 from django.contrib.auth.models import User
-from accounts.models import UserProfile
 from django.utils import timezone
 from datetime import datetime
-import sys
+
+# Chatbot imports
+from django.http import JsonResponse
+from chatbot.models import ChatbotResponse
+from chatbot.openai_chatbot import OpenAIChatbot
+from dotenv import load_dotenv
+
+load_dotenv()
+
 import os
+import sys
+
 
 import logging
 
@@ -47,21 +55,20 @@ class RestrictedView(TemplateView):
         return super().dispatch(*args, **kwargs)
     
 
-class HomeView(View):
-    def get(self, request, *args, **kwargs):
-        try:
-            upcoming_fixtures = Fixture.objects.filter(is_completed=False).order_by('date')[:5]
-            point_table = UserProfile.objects.all().order_by('-total_points')
-            shop_items = Item.objects.all()
-            return render(request, 'home.html', {'upcoming_fixtures': upcoming_fixtures,
-                                                 'point_table': point_table,
-                                                 'shop_items': shop_items})
-        except Exception as e:
-            # Handle the exception here, for example by logging it or displaying an error page.
-            logger.exception(e)
-            # Render the error page with a custom error message
-            return render(request, 'error.html', {'error_message': 'An error occurred. Please try again later.'})
-        
+def home(request):
+    try:
+        upcoming_fixtures = Fixture.objects.filter(is_completed=False).order_by('date')[:5]
+        point_table = UserProfile.objects.all().order_by('-total_points')
+        shop_items = Item.objects.all()
+        return render(request, 'home.html', {'upcoming_fixtures': upcoming_fixtures,
+                                             'point_table': point_table,
+                                             'shop_items': shop_items})
+    except Exception as e:
+        # Handle the exception here, for example by logging it or displaying an error page.
+        logger.exception(e)
+        # Render the error page with a custom error message
+        return render(request, 'error.html', {'error_message': 'An error occurred. Please try again later.'})
+    
 class ProfileView(LoginRequiredMixin, DetailView):
     model = User
     template_name = 'profile.html'
@@ -483,80 +490,23 @@ class PointsTable(ListView):
         context['teams'] = team_stats
 
         return context
-
-# View creates a Purchase object, generates a Stripe payment intent, and redirects 
-# the user to the payment success page if the payment is successful or to the payment 
-# error page if there is an error.
-
-# stripe.api_key = settings.STRIPE_SECRET_KEY
-
-# @require_POST
-# @csrf_exempt
-# def process_payment(request, fixture_id, booking_id):
-#     fixture = get_object_or_404(Fixture, id=fixture_id)
-#     booking = get_object_or_404(HeadToHead, id=booking_id, fixture=fixture)
-#     amount = int(booking.amount * 100) # in cents
-
-#     if request.method == 'POST':
-#         form = PurchaseForm(request.POST)
-#         if form.is_valid():
-#             # Create Purchase object and save to database
-#             purchase = form.save(commit=False)
-#             purchase.user = request.user
-#             purchase.item = booking
-#             purchase.price = booking.amount
-#             purchase.save()
-
-#             try:
-#                 intent = stripe.PaymentIntent.create(
-#                     amount=amount,
-#                     currency=settings.STRIPE_CURRENCY,
-#                     payment_method_types=['card']
-#                 )
-#                 client_secret = intent.client_secret
-#                 return redirect('payment_success')
-#             except stripe.error.CardError as e:
-#                 # Display error to user
-#                 error = e.error
-#                 return render(request, 'payment_error.html', {'error': error})
-#             except stripe.error.StripeError as e:
-#                 # Display error to user
-#                 error = {'message': 'An error occurred while processing your payment. Please try again later.'}
-#                 return render(request, 'payment_error.html', {'error': error})
-#     else:
-#         form = PurchaseForm()
-
-#     return render(request, 'process_payment.html', {'form': form, 'booking': booking, 'amount': amount})
     
 
+class ChatbotView(View):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.api_key = os.getenv("OPENAI_API_KEY") 
+        self.chatbot = OpenAIChatbot(api_key=self.api_key)
 
-
-# creating a Payment object to store payment information and redirecting the user to the payment page. 
-# It retrieves the Fixture and Booking objects associated with the payment, calculates the amount, 
-# creates a Payment object, and redirects the user to the payment page
-
-# @login_required
-# def process_payment(request, fixture_id, booking_id):
-#     fixture = get_object_or_404(Fixture, id=fixture_id)
-#     booking = get_object_or_404(Booking, id=booking_id)
-
-#     # Retrieve the players from the form
-#     player1 = fixture.player
-#     player2 = form.cleaned_data['player2']
-
-#     # Calculate the total amount
-#     amount = fixture.price_per_player * 2
-
-#     # Create the Payment object
-#     payment = Payment.objects.create(
-#         booking=booking,
-#         amount=amount,
-#         paid=False
-#     )
-
-#     # Redirect the user to the payment page
-#     return redirect(reverse('payment:process_payment', args=[payment.id]))
-
-
-# Here is a view to display the points table for all teams using class-based views
-
+    def get(self, request):
+        responses = ChatbotResponse.objects.all().order_by('-created_at')[:10]
+        return render(request, 'chatbot.html', {'responses': responses})
+    
+    def post(self, request):
+        message = request.POST['message']
+        response = self.chatbot.generate_response(message=message)
+        if "I'm sorry, I don't understand the question." in response:
+            return JsonResponse({'message': response, 'suggested_responses': ['Can you please rephrase your question?', 'Can you provide more information?', 'Would you like to speak to a human representative?']})
+        else:
+            return JsonResponse({'message': response})
+        
