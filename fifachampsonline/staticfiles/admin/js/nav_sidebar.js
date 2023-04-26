@@ -42,20 +42,20 @@
                 filterValue = '';
                 event.target.value = ''; // clear input
             }
-            let matches = false;
+            let Matches = false;
             for (const o of options) {
                 let displayValue = '';
                 if (filterValue) {
                     if (o.title.toLowerCase().indexOf(filterValue) === -1) {
                         displayValue = 'none';
                     } else {
-                        matches = true;
+                        Matches = true;
                     }
                 }
                 // show/hide parent <TR>
                 o.node.parentNode.parentNode.style.display = displayValue;
             }
-            if (!filterValue || matches) {
+            if (!filterValue || Matches) {
                 event.target.classList.remove('no-results');
             } else {
                 event.target.classList.add('no-results');

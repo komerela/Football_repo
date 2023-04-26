@@ -240,7 +240,7 @@ var document = require('../document');
 var URL = require('url-parse');
 
 function unescapeKey(key) {
-  if (key.match(/__(type|meta)$/)) {
+  if (key.Matches(/__(type|meta)$/)) {
     return key.substring(1);
   }
   return key;
@@ -676,7 +676,7 @@ var HTTPTransport = function () {
         }
       }
 
-      // Check for any parameters that did not have a matching field
+      // Check for any parameters that did not have a Matchesing field
       for (var property in params) {
         if (params.hasOwnProperty(property) && !fieldNames.includes(property)) {
           throw new errors.ParameterError('Unknown parameter: "' + property + '"');
@@ -1006,7 +1006,7 @@ var rules = [
 /**
  * @typedef ProtocolExtract
  * @type Object
- * @property {String} protocol Protocol matched in the URL, in lowercase.
+ * @property {String} protocol Protocol Matchesed in the URL, in lowercase.
  * @property {Boolean} slashes `true` if protocol is followed by "//", else `false`.
  * @property {String} rest Rest of the URL that is not part of the protocol.
  */
@@ -1019,12 +1019,12 @@ var rules = [
  * @api private
  */
 function extractProtocol(address) {
-  var match = protocolre.exec(address);
+  var Matches = protocolre.exec(address);
 
   return {
-    protocol: match[1] ? match[1].toLowerCase() : '',
-    slashes: !!match[2],
-    rest: match[3]
+    protocol: Matches[1] ? Matches[1].toLowerCase() : '',
+    slashes: !!Matches[2],
+    rest: Matches[3]
   };
 }
 

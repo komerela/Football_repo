@@ -23,7 +23,7 @@
           <td>{{ player.team_name }}</td>
           <td>
             <a href="{% url 'player-detail' player.pk %}">View</a>
-            <a href="{% url 'player-update' player.pk %}">Update</a>
+            <a href="{% url 'update_player' player.pk %}">Update</a>
             <a href="{% url 'player-delete' player.pk %}">Delete</a>
           </td>
         </tr>

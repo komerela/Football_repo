@@ -1,3 +1,24 @@
+import os
+import sys
+
+from django.shortcuts import render
+from .models import ChatbotResponse
+from chatbot.openai_chatbot import OpenAIChatbot
+
+def chatbot(request):
+    chatbot = OpenAIChatbot(api_key=os.getenv("OPENAI_API_KEY"))
+    if request.method == 'POST':
+        message = request.POST.get('message', '')
+        response = chatbot.generate_response(message=message)
+        if "I'm sorry, I don't understand the question." in response:
+            suggested_responses = ['Can you please rephrase your question?', 'Can you provide more information?', 'Would you like to speak to a human representative?']
+            return render(request, 'base.html', {'message': response, 'suggested_responses': suggested_responses})
+        else:
+            ChatbotResponse.objects.create(input=message, output=response)
+            return render(request, 'base.html', {'message': response})
+        
+    responses = ChatbotResponse.objects.all()
+    return render(request, 'base.html', {'responses': responses})
 
 
 """

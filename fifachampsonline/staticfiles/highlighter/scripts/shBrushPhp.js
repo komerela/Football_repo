@@ -40,7 +40,7 @@
 						'error_reporting escapeshellarg escapeshellcmd eval exec exit exp explode extension_loaded '+
 						'feof fflush fgetc fgetcsv fgets fgetss file_exists file_get_contents file_put_contents '+
 						'fileatime filectime filegroup fileinode filemtime fileowner fileperms filesize filetype '+
-						'floatval flock floor flush fmod fnmatch fopen fpassthru fprintf fputcsv fputs fread fscanf '+
+						'floatval flock floor flush fmod fnMatches fopen fpassthru fprintf fputcsv fputs fread fscanf '+
 						'fseek fsockopen fstat ftell ftok getallheaders getcwd getdate getenv gethostbyaddr gethostbyname '+
 						'gethostbynamel getimagesize getlastmod getmxrr getmygid getmyinode getmypid getmyuid getopt '+
 						'getprotobyname getprotobynumber getrandmax getrusage getservbyname getservbyport gettext '+

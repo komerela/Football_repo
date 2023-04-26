@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.shortcuts import render
 from .openai_chatbot import OpenAIChatbot
+from chatbot.models import ChatbotResponse
 
 class ChatbotMiddleware:
     def __init__(self, get_response):
@@ -9,6 +10,9 @@ class ChatbotMiddleware:
 
     def __call__(self, request):
         response = self.get_response(request)
-        chatbot_html = render(request, 'chatbot.html').content
-        response.content = response.content.replace(b'</body>', chatbot_html+b'</body>')
+        if request.path.startswith('/chatbot'):
+            responses = ChatbotResponse.objects.all().order_by('-created_at')[:10]
+            chatbot_html = render(request, 'chatbot.html', {'responses': responses}).content
+            response.content = response.content.replace(b'</body>', chatbot_html+b'</body>')
         return response
+

@@ -45,7 +45,7 @@ function doAjaxSubmit(e) {
       var boundaryCharNoSpace = "0-9A-Z'()+_,-./:=?";
       var boundaryChar = boundaryCharNoSpace + ' ';
       var re = new RegExp('^--([' + boundaryChar + ']{0,69}[' + boundaryCharNoSpace + '])[\\s]*?$', 'im');
-      var boundary = data.match(re);
+      var boundary = data.Matches(re);
       if (boundary !== null) {
         contentType += '; boundary="' + boundary[1] + '"';
       }

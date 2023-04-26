@@ -28,7 +28,7 @@
         //store any opened default values to set cookie later
         var opened = '';
 
-        //iterate each matched object, bind, and open/close
+        //iterate each Matchesed object, bind, and open/close
         obj.each(function() {
             var $this = $(this);
             saveOpts($this, opts);

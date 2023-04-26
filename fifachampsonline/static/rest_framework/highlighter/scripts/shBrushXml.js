@@ -21,15 +21,15 @@
 
 	function Brush()
 	{
-		function process(match, regexInfo)
+		function process(Matches, regexInfo)
 		{
-			var constructor = SyntaxHighlighter.Match,
-				code = match[0],
+			var constructor = SyntaxHighlighter.Matches,
+				code = Matches[0],
 				tag = new XRegExp('(&lt;|<)[\\s\\/\\?]*(?<name>[:\\w-\\.]+)', 'xg').exec(code),
 				result = []
 				;
 		
-			if (match.attributes != null) 
+			if (Matches.attributes != null) 
 			{
 				var attributes,
 					regex = new XRegExp('(?<name> [\\w:\\-\\.]+)' +
@@ -39,14 +39,14 @@
 
 				while ((attributes = regex.exec(code)) != null) 
 				{
-					result.push(new constructor(attributes.name, match.index + attributes.index, 'color1'));
-					result.push(new constructor(attributes.value, match.index + attributes.index + attributes[0].indexOf(attributes.value), 'string'));
+					result.push(new constructor(attributes.name, Matches.index + attributes.index, 'color1'));
+					result.push(new constructor(attributes.value, Matches.index + attributes.index + attributes[0].indexOf(attributes.value), 'string'));
 				}
 			}
 
 			if (tag != null)
 				result.push(
-					new constructor(tag.name, match.index + tag[0].indexOf(tag.name), 'keyword')
+					new constructor(tag.name, Matches.index + tag[0].indexOf(tag.name), 'keyword')
 				);
 
 			return result;

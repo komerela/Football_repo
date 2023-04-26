@@ -84,7 +84,7 @@ html[data-theme="dark"] {
 }
 
 /*
-Fully hide screen reader text so we only show the one matching the current
+Fully hide screen reader text so we only show the one Matchesing the current
 theme.
 */
 .theme-toggle .visually-hidden {

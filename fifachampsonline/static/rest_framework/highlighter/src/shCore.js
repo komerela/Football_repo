@@ -189,10 +189,10 @@ var sh = {
 			function getValue(name)
 			{
 				var r = new RegExp(name + '_(\\w+)'),
-					match = r.exec(className)
+					Matches = r.exec(className)
 					;
 
-				return match ? match[1] : null;
+				return Matches ? Matches[1] : null;
 			};
 			
 			var highlighter = getHighlighterById(findParentElement(target, '.syntaxhighlighter').id),
@@ -738,7 +738,7 @@ function trimFirstAndLastLines(str)
  */
 function parseParams(str)
 {
-	var match, 
+	var Matches, 
 		result = {},
 		arrayRegex = new XRegExp("^\\[(?<values>(.*?))\\]$"),
 		regex = new XRegExp(
@@ -754,9 +754,9 @@ function parseParams(str)
 		)
 		;
 
-	while ((match = regex.exec(str)) != null) 
+	while ((Matches = regex.exec(str)) != null) 
 	{
-		var value = match.value
+		var value = Matches.value
 			.replace(/^['"]|['"]$/g, '') // strip quotes from end of strings
 			;
 		
@@ -767,7 +767,7 @@ function parseParams(str)
 			value = m.values.length > 0 ? m.values.split(/\s*,\s*/) : [];
 		}
 		
-		result[match.name] = value;
+		result[Matches.name] = value;
 	}
 	
 	return result;
@@ -957,14 +957,14 @@ function unindent(str)
 		if (trim(line).length == 0) 
 			continue;
 		
-		var matches = regex.exec(line);
+		var Matches = regex.exec(line);
 		
 		// In the event that just one line doesn't have leading white space
 		// we can't unindent anything, so bail completely.
-		if (matches == null) 
+		if (Matches == null) 
 			return str;
 			
-		min = Math.min(matches[0].length, min);
+		min = Math.min(Matches[0].length, min);
 	}
 	
 	// trim minimum common number of white space from the begining of every line
@@ -976,16 +976,16 @@ function unindent(str)
 };
 
 /**
- * Callback method for Array.sort() which sorts matches by
+ * Callback method for Array.sort() which sorts Matches by
  * index position and then by length.
  * 
- * @param {Match} m1	Left object.
- * @param {Match} m2    Right object.
+ * @param {Matches} m1	Left object.
+ * @param {Matches} m2    Right object.
  * @return {Number}     Returns -1, 0 or -1 as a comparison result.
  */
-function matchesSortCallback(m1, m2)
+function MatchesSortCallback(m1, m2)
 {
-	// sort matches by index first
+	// sort Matches by index first
 	if(m1.index < m2.index)
 		return -1;
 	else if(m1.index > m2.index)
@@ -1004,36 +1004,36 @@ function matchesSortCallback(m1, m2)
 
 /**
  * Executes given regular expression on provided code and returns all
- * matches that are found.
+ * Matches that are found.
  * 
  * @param {String} code    Code to execute regular expression on.
  * @param {Object} regex   Regular expression item info from <code>regexList</code> collection.
- * @return {Array}         Returns a list of Match objects.
+ * @return {Array}         Returns a list of Matches objects.
  */ 
 function getMatches(code, regexInfo)
 {
-	function defaultAdd(match, regexInfo)
+	function defaultAdd(Matches, regexInfo)
 	{
-		return match[0];
+		return Matches[0];
 	};
 	
 	var index = 0,
-		match = null,
-		matches = [],
+		Matches = null,
+		Matches = [],
 		func = regexInfo.func ? regexInfo.func : defaultAdd
 		;
 	
-	while((match = regexInfo.regex.exec(code)) != null)
+	while((Matches = regexInfo.regex.exec(code)) != null)
 	{
-		var resultMatch = func(match, regexInfo);
+		var resultMatches = func(Matches, regexInfo);
 		
-		if (typeof(resultMatch) == 'string')
-			resultMatch = [new sh.Match(resultMatch, match.index, regexInfo.css)];
+		if (typeof(resultMatches) == 'string')
+			resultMatches = [new sh.Matches(resultMatches, Matches.index, regexInfo.css)];
 
-		matches = matches.concat(resultMatch);
+		Matches = Matches.concat(resultMatches);
 	}
 	
-	return matches;
+	return Matches;
 };
 
 /**
@@ -1048,17 +1048,17 @@ function processUrls(code)
 	return code.replace(sh.regexLib.url, function(m)
 	{
 		var suffix = '',
-			match = null
+			Matches = null
 			;
 		
 		// We include &lt; and &gt; in the URL for the common cases like <http://google.com>
 		// The problem is that they get transformed into &lt;http://google.com&gt;
 		// Where as &gt; easily looks like part of the URL string.
 	
-		if (match = gt.exec(m))
+		if (Matches = gt.exec(m))
 		{
-			m = match[1];
-			suffix = match[2];
+			m = Matches[1];
+			suffix = Matches[2];
 		}
 		
 		return '<a href="' + m + '">' + m + '</a>' + suffix;
@@ -1166,9 +1166,9 @@ function quickCodeHandler(e)
 };
 
 /**
- * Match object.
+ * Matches object.
  */
-sh.Match = function(value, index, css)
+sh.Matches = function(value, index, css)
 {
 	this.value = value;
 	this.index = index;
@@ -1177,7 +1177,7 @@ sh.Match = function(value, index, css)
 	this.brushName = null;
 };
 
-sh.Match.prototype.toString = function()
+sh.Matches.prototype.toString = function()
 {
 	return this.value;
 };
@@ -1223,50 +1223,50 @@ sh.HtmlScript = function(scriptBrushName)
 		{ regex: scriptBrush.htmlScript.code, func: process }
 	);
 	
-	function offsetMatches(matches, offset)
+	function offsetMatches(Matches, offset)
 	{
-		for (var j = 0; j < matches.length; j++) 
-			matches[j].index += offset;
+		for (var j = 0; j < Matches.length; j++) 
+			Matches[j].index += offset;
 	}
 	
-	function process(match, info)
+	function process(Matches, info)
 	{
-		var code = match.code,
-			matches = [],
+		var code = Matches.code,
+			Matches = [],
 			regexList = scriptBrush.regexList,
-			offset = match.index + match.left.length,
+			offset = Matches.index + Matches.left.length,
 			htmlScript = scriptBrush.htmlScript,
 			result
 			;
 
-		// add all matches from the code
+		// add all Matches from the code
 		for (var i = 0; i < regexList.length; i++)
 		{
 			result = getMatches(code, regexList[i]);
 			offsetMatches(result, offset);
-			matches = matches.concat(result);
+			Matches = Matches.concat(result);
 		}
 		
 		// add left script bracket
-		if (htmlScript.left != null && match.left != null)
+		if (htmlScript.left != null && Matches.left != null)
 		{
-			result = getMatches(match.left, htmlScript.left);
-			offsetMatches(result, match.index);
-			matches = matches.concat(result);
+			result = getMatches(Matches.left, htmlScript.left);
+			offsetMatches(result, Matches.index);
+			Matches = Matches.concat(result);
 		}
 		
 		// add right script bracket
-		if (htmlScript.right != null && match.right != null)
+		if (htmlScript.right != null && Matches.right != null)
 		{
-			result = getMatches(match.right, htmlScript.right);
-			offsetMatches(result, match.index + match[0].lastIndexOf(match.right));
-			matches = matches.concat(result);
+			result = getMatches(Matches.right, htmlScript.right);
+			offsetMatches(result, Matches.index + Matches[0].lastIndexOf(Matches.right));
+			Matches = Matches.concat(result);
 		}
 		
-		for (var j = 0; j < matches.length; j++)
-			matches[j].brushName = brushClass.brushName;
+		for (var j = 0; j < Matches.length; j++)
+			Matches[j].brushName = brushClass.brushName;
 			
-		return matches;
+		return Matches;
 	}
 };
 
@@ -1304,10 +1304,10 @@ sh.Highlighter.prototype = {
 	
 	/**
 	 * Applies all regular expression to the code and stores all found
-	 * matches in the `this.matches` array.
+	 * Matches in the `this.Matches` array.
 	 * @param {Array} regexList		List of regular expressions.
 	 * @param {String} code			Source code.
-	 * @return {Array}				Returns list of matches.
+	 * @return {Array}				Returns list of Matches.
 	 */
 	findMatches: function(regexList, code)
 	{
@@ -1319,43 +1319,43 @@ sh.Highlighter.prototype = {
 				if (typeof (regexList[i]) == "object")
 					result = result.concat(getMatches(code, regexList[i]));
 		
-		// sort and remove nested the matches
-		return this.removeNestedMatches(result.sort(matchesSortCallback));
+		// sort and remove nested the Matches
+		return this.removeNestedMatches(result.sort(MatchesSortCallback));
 	},
 	
 	/**
-	 * Checks to see if any of the matches are inside of other matches. 
+	 * Checks to see if any of the Matches are inside of other Matches. 
 	 * This process would get rid of highligted strings inside comments, 
 	 * keywords inside strings and so on.
 	 */
-	removeNestedMatches: function(matches)
+	removeNestedMatches: function(Matches)
 	{
 		// Optimized by Jose Prado (http://joseprado.com)
-		for (var i = 0; i < matches.length; i++) 
+		for (var i = 0; i < Matches.length; i++) 
 		{ 
-			if (matches[i] === null)
+			if (Matches[i] === null)
 				continue;
 			
-			var itemI = matches[i],
+			var itemI = Matches[i],
 				itemIEndPos = itemI.index + itemI.length
 				;
 			
-			for (var j = i + 1; j < matches.length && matches[i] !== null; j++) 
+			for (var j = i + 1; j < Matches.length && Matches[i] !== null; j++) 
 			{
-				var itemJ = matches[j];
+				var itemJ = Matches[j];
 				
 				if (itemJ === null) 
 					continue;
 				else if (itemJ.index > itemIEndPos) 
 					break;
 				else if (itemJ.index == itemI.index && itemJ.length > itemI.length)
-					matches[i] = null;
+					Matches[i] = null;
 				else if (itemJ.index >= itemI.index && itemJ.index < itemIEndPos) 
-					matches[j] = null;
+					Matches[j] = null;
 			}
 		}
 		
-		return matches;
+		return Matches;
 	},
 	
 	/**
@@ -1500,42 +1500,42 @@ sh.Highlighter.prototype = {
 	},
 	
 	/**
-	 * Finds all matches in the source code.
-	 * @param {String} code		Source code to process matches in.
-	 * @param {Array} matches	Discovered regex matches.
+	 * Finds all Matches in the source code.
+	 * @param {String} code		Source code to process Matches in.
+	 * @param {Array} Matches	Discovered regex Matches.
 	 * @return {String} Returns formatted HTML with processed mathes.
 	 */
-	getMatchesHtml: function(code, matches)
+	getMatchesHtml: function(code, Matches)
 	{
 		var pos = 0, 
 			result = '',
 			brushName = this.getParam('brush', '')
 			;
 		
-		function getBrushNameCss(match)
+		function getBrushNameCss(Matches)
 		{
-			var result = match ? (match.brushName || brushName) : brushName;
+			var result = Matches ? (Matches.brushName || brushName) : brushName;
 			return result ? result + ' ' : '';
 		};
 		
-		// Finally, go through the final list of matches and pull the all
-		// together adding everything in between that isn't a match.
-		for (var i = 0; i < matches.length; i++) 
+		// Finally, go through the final list of Matches and pull the all
+		// together adding everything in between that isn't a Matches.
+		for (var i = 0; i < Matches.length; i++) 
 		{
-			var match = matches[i],
-				matchBrushName
+			var Matches = Matches[i],
+				MatchesBrushName
 				;
 			
-			if (match === null || match.length === 0) 
+			if (Matches === null || Matches.length === 0) 
 				continue;
 			
-			matchBrushName = getBrushNameCss(match);
+			MatchesBrushName = getBrushNameCss(Matches);
 			
-			result += wrapLinesWithCode(code.substr(pos, match.index - pos), matchBrushName + 'plain')
-					+ wrapLinesWithCode(match.value, matchBrushName + match.css)
+			result += wrapLinesWithCode(code.substr(pos, Matches.index - pos), MatchesBrushName + 'plain')
+					+ wrapLinesWithCode(Matches.value, MatchesBrushName + Matches.css)
 					;
 
-			pos = match.index + match.length + (match.offset || 0);
+			pos = Matches.index + Matches.length + (Matches.offset || 0);
 		}
 
 		// don't forget to add whatever's remaining in the string
@@ -1554,7 +1554,7 @@ sh.Highlighter.prototype = {
 		var html = '',
 			classes = [ 'syntaxhighlighter' ],
 			tabSize,
-			matches,
+			Matches,
 			lineNumbers
 			;
 		
@@ -1594,10 +1594,10 @@ sh.Highlighter.prototype = {
 		if (gutter)
 			lineNumbers = this.figureOutLineNumbers(code);
 		
-		// find matches in the code using brushes regex list
-		matches = this.findMatches(this.regexList, code);
-		// processes found matches into the html
-		html = this.getMatchesHtml(code, matches);
+		// find Matches in the code using brushes regex list
+		Matches = this.findMatches(this.regexList, code);
+		// processes found Matches into the html
+		html = this.getMatchesHtml(code, Matches);
 		// finally, split all lines so that they wrap well
 		html = this.getCodeLinesHtml(html, lineNumbers);
 
@@ -1605,7 +1605,7 @@ sh.Highlighter.prototype = {
 		if (this.getParam('auto-links'))
 			html = processUrls(html);
 		
-		if (typeof(navigator) != 'undefined' && navigator.userAgent && navigator.userAgent.match(/MSIE/))
+		if (typeof(navigator) != 'undefined' && navigator.userAgent && navigator.userAgent.Matches(/MSIE/))
 			classes.push('ie');
 		
 		html = 

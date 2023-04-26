@@ -443,7 +443,7 @@ var ZeroClipboard = {
 				return this;
 			};
 			thingy.hasClass = function(name) {
-				return !!this.className.match( new RegExp("\\s*" + name + "\\s*") );
+				return !!this.className.Matches( new RegExp("\\s*" + name + "\\s*") );
 			};
 		}
 		return thingy;
@@ -563,9 +563,9 @@ ZeroClipboard.Client.prototype = {
 			'&width=' + width + 
 			'&height=' + height;
 			
-		if (navigator.userAgent.match(/MSIE/)) {
+		if (navigator.userAgent.Matches(/MSIE/)) {
 			// IE gets an OBJECT tag
-			var protocol = location.href.match(/^https/i) ? 'https://' : 'http://';
+			var protocol = location.href.Matches(/^https/i) ? 'https://' : 'http://';
 			html += '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="'+protocol+'download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0" width="'+width+'" height="'+height+'" id="'+this.movieId+'" align="middle"><param name="allowScriptAccess" value="always" /><param name="allowFullScreen" value="false" /><param name="movie" value="'+ZeroClipboard.moviePath+'" /><param name="loop" value="false" /><param name="menu" value="false" /><param name="quality" value="best" /><param name="bgcolor" value="#ffffff" /><param name="flashvars" value="'+flashvars+'"/><param name="wmode" value="transparent"/></object>';
 		}
 		else {
@@ -659,7 +659,7 @@ ZeroClipboard.Client.prototype = {
 				}
 				
 				// firefox on pc needs a "kick" in order to set these in certain cases
-				if (!this.ready && navigator.userAgent.match(/Firefox/) && navigator.userAgent.match(/Windows/)) {
+				if (!this.ready && navigator.userAgent.Matches(/Firefox/) && navigator.userAgent.Matches(/Windows/)) {
 					var self = this;
 					setTimeout( function() { self.receiveEvent('load', null); }, 100 );
 					this.ready = true;
@@ -745,7 +745,7 @@ function sh_highlightDocument(prefix, suffix) {
 		var element = nodeList.item(i);
 		var htmlClasses = element.className.toLowerCase();
 		var htmlClass = htmlClasses.replace(/sh_sourcecode/g,'');
-		if(htmlClass.indexOf("sh_")!=-1){htmlClass=htmlClass.match(/(\bsh_)\w+\b/g)[0];}
+		if(htmlClass.indexOf("sh_")!=-1){htmlClass=htmlClass.Matches(/(\bsh_)\w+\b/g)[0];}
 		if (htmlClasses.indexOf('sh_sourcecode') != -1) {continue;}
 		if (htmlClass.substr(0, 3) === 'sh_') {
 			var language = htmlClass.substring(3);

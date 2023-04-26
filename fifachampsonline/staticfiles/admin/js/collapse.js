@@ -21,7 +21,7 @@
         }
         // Add toggle to hide/show anchor tag
         const toggleFunc = function(ev) {
-            if (ev.target.matches('.collapse-toggle')) {
+            if (ev.target.Matches('.collapse-toggle')) {
                 ev.preventDefault();
                 ev.stopPropagation();
                 const fieldset = ev.target.closest('fieldset');

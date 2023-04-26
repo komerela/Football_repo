@@ -1,7 +1,7 @@
 
 from django.views.generic import CreateView
 from django.urls import reverse_lazy, reverse
-from fixtures.models import Fixture, Booking, Player, Item, HeadToHead, Matches, Result, Purchase, Cart
+from fixtures.models import Fixture, Booking, Player, Item, HeadToHead, Matches, Result, Purchase, Cart, Player
 from fixtures.forms import HeadToHeadForm, PurchaseForm, HeadToHeadRequestForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
@@ -21,13 +21,17 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import datetime
 
-# Chatbot imports
-from django.http import JsonResponse
-from chatbot.models import ChatbotResponse
-from chatbot.openai_chatbot import OpenAIChatbot
-from dotenv import load_dotenv
+from django.urls import reverse_lazy
+from django.views.generic.edit import UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect  
+# # Chatbot imports
+# from django.http import JsonResponse
+# from chatbot.models import ChatbotResponse
+# from chatbot.openai_chatbot import OpenAIChatbot
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 
 import os
 import sys
@@ -344,19 +348,29 @@ class PlayerCreateView(CreateView):
         return super().form_valid(form)
 
 @method_decorator(user_passes_test(is_staff), name='dispatch')
-class PlayerUpdateView(UpdateView):
+class UpdatePlayerView(UpdateView):
     model = Player
-    template_name = 'player_form.html'
-    fields = ['name', 'ps_username', 'email', 'phone_number', 'team_name', 'fixture']
-
+    fields = ['name', 'team_name', 'ps_username', 'fixture']
+    template_name = 'update.html'
+    success_url = reverse_lazy('player-detail') # URL to redirect to
+    
     def form_valid(self, form):
-        return super().form_valid(form)
+        # Save the form data to the database
+        response = super().form_valid(form)
+        self.object.save()
+        return response
 
 @method_decorator(user_passes_test(is_staff), name='dispatch')
 class PlayerDeleteView(DeleteView):
     model = Player
     template_name = 'player_confirm_delete.html'
     success_url = reverse_lazy('player-list')
+    
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        self.object.delete()
+        return HttpResponseRedirect(success_url)
 
 
 def player_info(request, player_id):
@@ -367,7 +381,7 @@ def player_info(request, player_id):
     }
     return render(request, 'player_info.html', context)
 
-# view where a logged-in player can request a head-to-head match with another 
+# view where a logged-in player can request a head-to-head Matches with another 
 # player and specify the date and time they want to play the game. 
 
 @login_required
@@ -492,21 +506,4 @@ class PointsTable(ListView):
         return context
     
 
-class ChatbotView(View):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.api_key = os.getenv("OPENAI_API_KEY") 
-        self.chatbot = OpenAIChatbot(api_key=self.api_key)
-
-    def get(self, request):
-        responses = ChatbotResponse.objects.all().order_by('-created_at')[:10]
-        return render(request, 'chatbot.html', {'responses': responses})
-    
-    def post(self, request):
-        message = request.POST['message']
-        response = self.chatbot.generate_response(message=message)
-        if "I'm sorry, I don't understand the question." in response:
-            return JsonResponse({'message': response, 'suggested_responses': ['Can you please rephrase your question?', 'Can you provide more information?', 'Would you like to speak to a human representative?']})
-        else:
-            return JsonResponse({'message': response})
         

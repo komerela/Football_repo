@@ -28,7 +28,7 @@
 						'self super then throw true undef unless until when while yield';
 
 		var builtins =	'Array Bignum Binding Class Continuation Dir Exception FalseClass File::Stat File Fixnum Fload ' +
-						'Hash Integer IO MatchData Method Module NilClass Numeric Object Proc Range Regexp String Struct::TMS Symbol ' +
+						'Hash Integer IO MatchesData Method Module NilClass Numeric Object Proc Range Regexp String Struct::TMS Symbol ' +
 						'ThreadGroup Thread Time TrueClass';
 
 		this.regexList = [

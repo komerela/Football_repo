@@ -13,7 +13,7 @@
 
         function cycleTheme() {
             const currentTheme = localStorage.getItem("theme") || "auto";
-            const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+            const prefersDark = window.MatchesMedia("(prefers-color-scheme: dark)").Matches;
 
             if (prefersDark) {
                 // Auto (dark) -> Light -> Dark

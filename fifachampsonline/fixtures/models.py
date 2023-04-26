@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from accounts.models import User
 from datetime import date
+from django.urls import reverse
+
 # Create your models here.
 
 class Fixture(models.Model):
@@ -27,6 +29,9 @@ class Player(models.Model):
     phone_number = models.CharField(max_length=15)
     team_name = models.CharField(max_length=100)
     fixture = models.ForeignKey(Fixture, on_delete=models.CASCADE)
+    
+    def get_absolute_url(self):
+        return reverse('player_detail', args=[str(self.id)])
 
     def __str__(self):
         return self.name
@@ -113,6 +118,7 @@ class Result(models.Model):
 class Booking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     fixture = models.ForeignKey(Fixture, on_delete=models.CASCADE)
+    date = models.DateField(default=date(2023, 4, 17))
     head_to_head = models.ForeignKey(HeadToHead, on_delete=models.CASCADE)
     paid = models.BooleanField(default=False)
     booking_date = models.DateTimeField(auto_now_add=True)

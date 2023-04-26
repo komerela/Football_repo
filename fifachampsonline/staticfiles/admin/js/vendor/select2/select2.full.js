@@ -97,7 +97,7 @@ var requirejs, require, define;
             // Starts with a '.' so need the baseName
             if (name[0].charAt(0) === '.' && baseParts) {
                 //Convert baseName to array, and lop off the last part,
-                //so that . matches that 'directory' and not name of the baseName's
+                //so that . Matches that 'directory' and not name of the baseName's
                 //module. For instance, baseName of 'one/two/three', maps to
                 //'one/two/three.js', but we want the directory, 'one/two' for
                 //this normalization.
@@ -138,7 +138,7 @@ var requirejs, require, define;
                 nameSegment = nameParts.slice(0, i).join("/");
 
                 if (baseParts) {
-                    //Find the longest baseName segment match in the config.
+                    //Find the longest baseName segment Matches in the config.
                     //So, do joins on the biggest to smallest lengths of baseParts.
                     for (j = baseParts.length; j > 0; j -= 1) {
                         mapValue = map[baseParts.slice(0, j).join('/')];
@@ -148,7 +148,7 @@ var requirejs, require, define;
                         if (mapValue) {
                             mapValue = mapValue[nameSegment];
                             if (mapValue) {
-                                //Match, update name to the new value.
+                                //Matches, update name to the new value.
                                 foundMap = mapValue;
                                 foundI = i;
                                 break;
@@ -161,8 +161,8 @@ var requirejs, require, define;
                     break;
                 }
 
-                //Check for a star map match, but just hold on to it,
-                //if there is a shorter segment match later in a matching
+                //Check for a star map Matches, but just hold on to it,
+                //if there is a shorter segment Matches later in a Matchesing
                 //config, then favor over this star map.
                 if (!foundStarMap && starMap && starMap[nameSegment]) {
                     foundStarMap = starMap[nameSegment];
@@ -750,8 +750,8 @@ S2.define('select2/utils',[
       return markup;
     }
 
-    return String(markup).replace(/[&<>"'\/\\]/g, function (match) {
-      return replaceMap[match];
+    return String(markup).replace(/[&<>"'\/\\]/g, function (Matches) {
+      return replaceMap[Matches];
     });
   };
 
@@ -1016,11 +1016,11 @@ S2.define('select2/results',[
       'aria-selected': 'false'
     };
 
-    var matches = window.Element.prototype.matches ||
+    var Matches = window.Element.prototype.Matches ||
       window.Element.prototype.msMatchesSelector ||
       window.Element.prototype.webkitMatchesSelector;
 
-    if ((data.element != null && matches.call(data.element, ':disabled')) ||
+    if ((data.element != null && Matches.call(data.element, ':disabled')) ||
         (data.element == null && data.disabled)) {
       delete attrs['aria-selected'];
       attrs['aria-disabled'] = 'true';
@@ -3324,10 +3324,10 @@ S2.define('select2/data/select',[
 
       var option = self.item($option);
 
-      var matches = self.matches(params, option);
+      var Matches = self.Matches(params, option);
 
-      if (matches !== null) {
-        data.push(matches);
+      if (Matches !== null) {
+        data.push(Matches);
       }
     });
 
@@ -3461,10 +3461,10 @@ S2.define('select2/data/select',[
     return $.extend({}, defaults, item);
   };
 
-  SelectAdapter.prototype.matches = function (params, data) {
-    var matcher = this.options.get('matcher');
+  SelectAdapter.prototype.Matches = function (params, data) {
+    var Matcheser = this.options.get('Matcheser');
 
-    return matcher(params, data);
+    return Matcheser(params, data);
   };
 
   return SelectAdapter;
@@ -3596,7 +3596,7 @@ S2.define('select2/data/ajax',[
   };
 
   AjaxAdapter.prototype.query = function (params, callback) {
-    var matches = [];
+    var Matches = [];
     var self = this;
 
     if (this._request != null) {
@@ -5019,14 +5019,14 @@ S2.define('select2/defaults',[
   Defaults.prototype.reset = function () {
     function stripDiacritics (text) {
       // Used 'uni range + named function' from http://jsperf.com/diacritics/18
-      function match(a) {
+      function Matches(a) {
         return DIACRITICS[a] || a;
       }
 
-      return text.replace(/[^\u0000-\u007E]/g, match);
+      return text.replace(/[^\u0000-\u007E]/g, Matches);
     }
 
-    function matcher (params, data) {
+    function Matcheser (params, data) {
       // Always return the object if there is nothing to compare
       if ($.trim(params.term) === '') {
         return data;
@@ -5035,28 +5035,28 @@ S2.define('select2/defaults',[
       // Do a recursive check for options with children
       if (data.children && data.children.length > 0) {
         // Clone the data object if there are children
-        // This is required as we modify the object to remove any non-matches
-        var match = $.extend(true, {}, data);
+        // This is required as we modify the object to remove any non-Matches
+        var Matches = $.extend(true, {}, data);
 
         // Check each child of the option
         for (var c = data.children.length - 1; c >= 0; c--) {
           var child = data.children[c];
 
-          var matches = matcher(params, child);
+          var Matches = Matcheser(params, child);
 
-          // If there wasn't a match, remove the object in the array
-          if (matches == null) {
-            match.children.splice(c, 1);
+          // If there wasn't a Matches, remove the object in the array
+          if (Matches == null) {
+            Matches.children.splice(c, 1);
           }
         }
 
-        // If any children matched, return the new object
-        if (match.children.length > 0) {
-          return match;
+        // If any children Matchesed, return the new object
+        if (Matches.children.length > 0) {
+          return Matches;
         }
 
-        // If there were no matching children, check just the plain object
-        return matcher(params, match);
+        // If there were no Matchesing children, check just the plain object
+        return Matcheser(params, Matches);
       }
 
       var original = stripDiacritics(data.text).toUpperCase();
@@ -5079,7 +5079,7 @@ S2.define('select2/defaults',[
       dropdownAutoWidth: false,
       escapeMarkup: Utils.escapeMarkup,
       language: {},
-      matcher: matcher,
+      Matcheser: Matcheser,
       minimumInputLength: 0,
       maximumInputLength: 0,
       maximumSelectionLength: 0,
@@ -5311,7 +5311,7 @@ S2.define('select2/options',[
         // This is more than likely the jQuery data helper
         var dataValue = Utils.GetData($e[0], dataName);
 
-        // camelCase the attribute name to match the spec
+        // camelCase the attribute name to Matches the spec
         var camelDataName = dataName.replace(/-([a-z])/g, upperCaseLetter);
 
         // Store the data attribute contents into the dataset since
@@ -5510,10 +5510,10 @@ S2.define('select2/core',[
 
       for (var i = 0, l = attrs.length; i < l; i = i + 1) {
         var attr = attrs[i].replace(/\s/g, '');
-        var matches = attr.match(WIDTH);
+        var Matches = attr.Matches(WIDTH);
 
-        if (matches !== null && matches.length >= 1) {
-          return matches[1];
+        if (Matches !== null && Matches.length >= 1) {
+          return Matches[1];
         }
       }
 
@@ -6328,10 +6328,10 @@ S2.define('select2/compat/inputData',[
     for (var d = 0; d < this._currentData.length; d++) {
       var data = this._currentData[d];
 
-      var matches = this.matches(params, data);
+      var Matches = this.Matches(params, data);
 
-      if (matches !== null) {
-        results.push(matches);
+      if (Matches !== null) {
+        results.push(Matches);
       }
     }
 
@@ -6351,47 +6351,47 @@ S2.define('select2/compat/inputData',[
   return InputData;
 });
 
-S2.define('select2/compat/matcher',[
+S2.define('select2/compat/Matcheser',[
   'jquery'
 ], function ($) {
-  function oldMatcher (matcher) {
-    function wrappedMatcher (params, data) {
-      var match = $.extend(true, {}, data);
+  function oldMatcheser (Matcheser) {
+    function wrappedMatcheser (params, data) {
+      var Matches = $.extend(true, {}, data);
 
       if (params.term == null || $.trim(params.term) === '') {
-        return match;
+        return Matches;
       }
 
       if (data.children) {
         for (var c = data.children.length - 1; c >= 0; c--) {
           var child = data.children[c];
 
-          // Check if the child object matches
-          // The old matcher returned a boolean true or false
-          var doesMatch = matcher(params.term, child.text, child);
+          // Check if the child object Matches
+          // The old Matcheser returned a boolean true or false
+          var doesMatches = Matcheser(params.term, child.text, child);
 
-          // If the child didn't match, pop it off
-          if (!doesMatch) {
-            match.children.splice(c, 1);
+          // If the child didn't Matches, pop it off
+          if (!doesMatches) {
+            Matches.children.splice(c, 1);
           }
         }
 
-        if (match.children.length > 0) {
-          return match;
+        if (Matches.children.length > 0) {
+          return Matches;
         }
       }
 
-      if (matcher(params.term, data.text, data)) {
-        return match;
+      if (Matcheser(params.term, data.text, data)) {
+        return Matches;
       }
 
       return null;
     }
 
-    return wrappedMatcher;
+    return wrappedMatcheser;
   }
 
-  return oldMatcher;
+  return oldMatcheser;
 });
 
 S2.define('select2/compat/query',[

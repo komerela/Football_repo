@@ -25,7 +25,7 @@
         clockDivName: 'clockbox', // name of clock <div> that gets toggled
         clockLinkName: 'clocklink', // name of the link that is used to toggle
         shortCutsClass: 'datetimeshortcuts', // class of the clock and cal shortcuts
-        timezoneWarningClass: 'timezonewarning', // class of the warning for timezone mismatch
+        timezoneWarningClass: 'timezonewarning', // class of the warning for timezone misMatches
         timezoneOffset: 0,
         init: function() {
             const serverOffset = document.body.dataset.adminUtcOffset;
@@ -57,12 +57,12 @@
                 return new Date();
             }
         },
-        // Add a warning when the time zone in the browser and backend do not match.
+        // Add a warning when the time zone in the browser and backend do not Matches.
         addTimezoneWarning: function(inp) {
             const warningClass = DateTimeShortcuts.timezoneWarningClass;
             let timezoneOffset = DateTimeShortcuts.timezoneOffset / 3600;
 
-            // Only warn if there is a time zone mismatch.
+            // Only warn if there is a time zone misMatches.
             if (!timezoneOffset) {
                 return;
             }

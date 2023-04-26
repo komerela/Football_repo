@@ -29,14 +29,14 @@
 						'short sizeof stackalloc static string struct switch this throw true try ' +
 						'typeof uint ulong unchecked unsafe ushort using virtual void while';
 
-		function fixComments(match, regexInfo)
+		function fixComments(Matches, regexInfo)
 		{
-			var css = (match[0].indexOf("///") == 0)
+			var css = (Matches[0].indexOf("///") == 0)
 				? 'color1'
 				: 'comments'
 				;
 			
-			return [new SyntaxHighlighter.Match(match[0], match.index, css)];
+			return [new SyntaxHighlighter.Matches(Matches[0], Matches.index, css)];
 		}
 
 		this.regexList = [

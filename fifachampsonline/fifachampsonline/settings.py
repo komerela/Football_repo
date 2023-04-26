@@ -15,7 +15,6 @@ from django.conf import settings
 from celery.schedules import crontab
 import os
 import stripe
-from dotenv import load_dotenv
 
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'fifachampsonline.settings')

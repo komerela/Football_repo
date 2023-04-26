@@ -175,8 +175,8 @@ jQuery.fn = jQuery.prototype = {
 		return slice.call( this );
 	},
 
-	// Get the Nth element in the matched element set OR
-	// Get the whole matched element set as a clean array
+	// Get the Nth element in the Matchesed element set OR
+	// Get the whole Matchesed element set as a clean array
 	get: function( num ) {
 
 		// Return all the elements in a clean array
@@ -189,10 +189,10 @@ jQuery.fn = jQuery.prototype = {
 	},
 
 	// Take an array of elements and push it onto the stack
-	// (returning the new matched element set)
+	// (returning the new Matchesed element set)
 	pushStack: function( elems ) {
 
-		// Build a new jQuery matched element set
+		// Build a new jQuery Matchesed element set
 		var ret = jQuery.merge( this.constructor(), elems );
 
 		// Add the old object onto the stack (as a reference)
@@ -202,7 +202,7 @@ jQuery.fn = jQuery.prototype = {
 		return ret;
 	},
 
-	// Execute a callback for every element in the matched set.
+	// Execute a callback for every element in the Matchesed set.
 	each: function( callback ) {
 		return jQuery.each( this, callback );
 	},
@@ -437,7 +437,7 @@ jQuery.extend( {
 
 	grep: function( elems, callback, invert ) {
 		var callbackInverse,
-			matches = [],
+			Matches = [],
 			i = 0,
 			length = elems.length,
 			callbackExpect = !invert;
@@ -447,11 +447,11 @@ jQuery.extend( {
 		for ( ; i < length; i++ ) {
 			callbackInverse = !callback( elems[ i ], i );
 			if ( callbackInverse !== callbackExpect ) {
-				matches.push( elems[ i ] );
+				Matches.push( elems[ i ] );
 			}
 		}
 
-		return matches;
+		return Matches;
 	},
 
 	// arg is for internal usage only
@@ -551,7 +551,7 @@ var i,
 	documentIsHTML,
 	rbuggyQSA,
 	rbuggyMatches,
-	matches,
+	Matches,
 	contains,
 
 	// Instance-specific data
@@ -640,7 +640,7 @@ var i,
 	rpseudo = new RegExp( pseudos ),
 	ridentifier = new RegExp( "^" + identifier + "$" ),
 
-	matchExpr = {
+	MatchesExpr = {
 		"ID": new RegExp( "^#(" + identifier + ")" ),
 		"CLASS": new RegExp( "^\\.(" + identifier + ")" ),
 		"TAG": new RegExp( "^(" + identifier + "|[*])" ),
@@ -652,7 +652,7 @@ var i,
 		"bool": new RegExp( "^(?:" + booleans + ")$", "i" ),
 
 		// For use in libraries implementing .is()
-		// We use this for POS matching in `select`
+		// We use this for POS Matchesing in `select`
 		"needsContext": new RegExp( "^" + whitespace +
 			"*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\(" + whitespace +
 			"*((?:-\\d)?\\d*)" + whitespace + "*\\)|)(?=[^-]|$)", "i" )
@@ -757,7 +757,7 @@ try {
 }
 
 function Sizzle( selector, context, results, seed ) {
-	var m, i, elem, nid, match, groups, newSelector,
+	var m, i, elem, nid, Matches, groups, newSelector,
 		newContext = context && context.ownerDocument,
 
 		// nodeType defaults to 9, since context defaults to document
@@ -781,10 +781,10 @@ function Sizzle( selector, context, results, seed ) {
 
 			// If the selector is sufficiently simple, try using a "get*By*" DOM method
 			// (excepting DocumentFragment context, where the methods don't exist)
-			if ( nodeType !== 11 && ( match = rquickExpr.exec( selector ) ) ) {
+			if ( nodeType !== 11 && ( Matches = rquickExpr.exec( selector ) ) ) {
 
 				// ID selector
-				if ( ( m = match[ 1 ] ) ) {
+				if ( ( m = Matches[ 1 ] ) ) {
 
 					// Document context
 					if ( nodeType === 9 ) {
@@ -792,7 +792,7 @@ function Sizzle( selector, context, results, seed ) {
 
 							// Support: IE, Opera, Webkit
 							// TODO: identify versions
-							// getElementById can match elements by name instead of ID
+							// getElementById can Matches elements by name instead of ID
 							if ( elem.id === m ) {
 								results.push( elem );
 								return results;
@@ -806,7 +806,7 @@ function Sizzle( selector, context, results, seed ) {
 
 						// Support: IE, Opera, Webkit
 						// TODO: identify versions
-						// getElementById can match elements by name instead of ID
+						// getElementById can Matches elements by name instead of ID
 						if ( newContext && ( elem = newContext.getElementById( m ) ) &&
 							contains( context, elem ) &&
 							elem.id === m ) {
@@ -817,12 +817,12 @@ function Sizzle( selector, context, results, seed ) {
 					}
 
 				// Type selector
-				} else if ( match[ 2 ] ) {
+				} else if ( Matches[ 2 ] ) {
 					push.apply( results, context.getElementsByTagName( selector ) );
 					return results;
 
 				// Class selector
-				} else if ( ( m = match[ 3 ] ) && support.getElementsByClassName &&
+				} else if ( ( m = Matches[ 3 ] ) && support.getElementsByClassName &&
 					context.getElementsByClassName ) {
 
 					push.apply( results, context.getElementsByClassName( m ) );
@@ -1025,7 +1025,7 @@ function createDisabledPseudo( disabled ) {
 	// Known :disabled false positives: fieldset[disabled] > legend:nth-of-type(n+2) :can-disable
 	return function( elem ) {
 
-		// Only certain elements can match :enabled or :disabled
+		// Only certain elements can Matches :enabled or :disabled
 		// https://html.spec.whatwg.org/multipage/scripting.html#selector-enabled
 		// https://html.spec.whatwg.org/multipage/scripting.html#selector-disabled
 		if ( "form" in elem ) {
@@ -1079,15 +1079,15 @@ function createDisabledPseudo( disabled ) {
 function createPositionalPseudo( fn ) {
 	return markFunction( function( argument ) {
 		argument = +argument;
-		return markFunction( function( seed, matches ) {
+		return markFunction( function( seed, Matches ) {
 			var j,
-				matchIndexes = fn( [], seed.length, argument ),
-				i = matchIndexes.length;
+				MatchesIndexes = fn( [], seed.length, argument ),
+				i = MatchesIndexes.length;
 
-			// Match elements found at the specified indexes
+			// Matches elements found at the specified indexes
 			while ( i-- ) {
-				if ( seed[ ( j = matchIndexes[ i ] ) ] ) {
-					seed[ j ] = !( matches[ j ] = seed[ j ] );
+				if ( seed[ ( j = MatchesIndexes[ i ] ) ] ) {
+					seed[ j ] = !( Matches[ j ] = seed[ j ] );
 				}
 			}
 		} );
@@ -1319,12 +1319,12 @@ setDocument = Sizzle.setDocument = function( node ) {
 		}
 	};
 
-	/* QSA/matchesSelector
+	/* QSA/MatchesSelector
 	---------------------------------------------------------------------- */
 
-	// QSA and matchesSelector support
+	// QSA and MatchesSelector support
 
-	// matchesSelector(:active) reports false when true (IE9/Opera 11.5)
+	// MatchesSelector(:active) reports false when true (IE9/Opera 11.5)
 	rbuggyMatches = [];
 
 	// qSa(:focus) reports false when true (Chrome 21)
@@ -1439,7 +1439,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 		} );
 	}
 
-	if ( ( support.matchesSelector = rnative.test( ( matches = docElem.matches ||
+	if ( ( support.MatchesSelector = rnative.test( ( Matches = docElem.Matches ||
 		docElem.webkitMatchesSelector ||
 		docElem.mozMatchesSelector ||
 		docElem.oMatchesSelector ||
@@ -1447,13 +1447,13 @@ setDocument = Sizzle.setDocument = function( node ) {
 
 		assert( function( el ) {
 
-			// Check to see if it's possible to do matchesSelector
+			// Check to see if it's possible to do MatchesSelector
 			// on a disconnected node (IE 9)
-			support.disconnectedMatch = matches.call( el, "*" );
+			support.disconnectedMatches = Matches.call( el, "*" );
 
 			// This should fail with an exception
 			// Gecko does not error, returns false instead
-			matches.call( el, "[s!='']:x" );
+			Matches.call( el, "[s!='']:x" );
 			rbuggyMatches.push( "!=", pseudos );
 		} );
 	}
@@ -1638,23 +1638,23 @@ setDocument = Sizzle.setDocument = function( node ) {
 	return document;
 };
 
-Sizzle.matches = function( expr, elements ) {
+Sizzle.Matches = function( expr, elements ) {
 	return Sizzle( expr, null, null, elements );
 };
 
-Sizzle.matchesSelector = function( elem, expr ) {
+Sizzle.MatchesSelector = function( elem, expr ) {
 	setDocument( elem );
 
-	if ( support.matchesSelector && documentIsHTML &&
+	if ( support.MatchesSelector && documentIsHTML &&
 		!nonnativeSelectorCache[ expr + " " ] &&
 		( !rbuggyMatches || !rbuggyMatches.test( expr ) ) &&
 		( !rbuggyQSA     || !rbuggyQSA.test( expr ) ) ) {
 
 		try {
-			var ret = matches.call( elem, expr );
+			var ret = Matches.call( elem, expr );
 
-			// IE 9's matchesSelector returns false on disconnected nodes
-			if ( ret || support.disconnectedMatch ||
+			// IE 9's MatchesSelector returns false on disconnected nodes
+			if ( ret || support.disconnectedMatches ||
 
 				// As well, disconnected nodes are said to be in a document
 				// fragment in IE 9
@@ -1797,7 +1797,7 @@ Expr = Sizzle.selectors = {
 
 	createPseudo: markFunction,
 
-	match: matchExpr,
+	Matches: MatchesExpr,
 
 	attrHandle: {},
 
@@ -1811,23 +1811,23 @@ Expr = Sizzle.selectors = {
 	},
 
 	preFilter: {
-		"ATTR": function( match ) {
-			match[ 1 ] = match[ 1 ].replace( runescape, funescape );
+		"ATTR": function( Matches ) {
+			Matches[ 1 ] = Matches[ 1 ].replace( runescape, funescape );
 
-			// Move the given value to match[3] whether quoted or unquoted
-			match[ 3 ] = ( match[ 3 ] || match[ 4 ] ||
-				match[ 5 ] || "" ).replace( runescape, funescape );
+			// Move the given value to Matches[3] whether quoted or unquoted
+			Matches[ 3 ] = ( Matches[ 3 ] || Matches[ 4 ] ||
+				Matches[ 5 ] || "" ).replace( runescape, funescape );
 
-			if ( match[ 2 ] === "~=" ) {
-				match[ 3 ] = " " + match[ 3 ] + " ";
+			if ( Matches[ 2 ] === "~=" ) {
+				Matches[ 3 ] = " " + Matches[ 3 ] + " ";
 			}
 
-			return match.slice( 0, 4 );
+			return Matches.slice( 0, 4 );
 		},
 
-		"CHILD": function( match ) {
+		"CHILD": function( Matches ) {
 
-			/* matches from matchExpr["CHILD"]
+			/* Matches from MatchesExpr["CHILD"]
 				1 type (only|nth|...)
 				2 what (child|of-type)
 				3 argument (even|odd|\d*|\d*n([+-]\d+)?|...)
@@ -1837,41 +1837,41 @@ Expr = Sizzle.selectors = {
 				7 sign of y-component
 				8 y of y-component
 			*/
-			match[ 1 ] = match[ 1 ].toLowerCase();
+			Matches[ 1 ] = Matches[ 1 ].toLowerCase();
 
-			if ( match[ 1 ].slice( 0, 3 ) === "nth" ) {
+			if ( Matches[ 1 ].slice( 0, 3 ) === "nth" ) {
 
 				// nth-* requires argument
-				if ( !match[ 3 ] ) {
-					Sizzle.error( match[ 0 ] );
+				if ( !Matches[ 3 ] ) {
+					Sizzle.error( Matches[ 0 ] );
 				}
 
 				// numeric x and y parameters for Expr.filter.CHILD
 				// remember that false/true cast respectively to 0/1
-				match[ 4 ] = +( match[ 4 ] ?
-					match[ 5 ] + ( match[ 6 ] || 1 ) :
-					2 * ( match[ 3 ] === "even" || match[ 3 ] === "odd" ) );
-				match[ 5 ] = +( ( match[ 7 ] + match[ 8 ] ) || match[ 3 ] === "odd" );
+				Matches[ 4 ] = +( Matches[ 4 ] ?
+					Matches[ 5 ] + ( Matches[ 6 ] || 1 ) :
+					2 * ( Matches[ 3 ] === "even" || Matches[ 3 ] === "odd" ) );
+				Matches[ 5 ] = +( ( Matches[ 7 ] + Matches[ 8 ] ) || Matches[ 3 ] === "odd" );
 
 				// other types prohibit arguments
-			} else if ( match[ 3 ] ) {
-				Sizzle.error( match[ 0 ] );
+			} else if ( Matches[ 3 ] ) {
+				Sizzle.error( Matches[ 0 ] );
 			}
 
-			return match;
+			return Matches;
 		},
 
-		"PSEUDO": function( match ) {
+		"PSEUDO": function( Matches ) {
 			var excess,
-				unquoted = !match[ 6 ] && match[ 2 ];
+				unquoted = !Matches[ 6 ] && Matches[ 2 ];
 
-			if ( matchExpr[ "CHILD" ].test( match[ 0 ] ) ) {
+			if ( MatchesExpr[ "CHILD" ].test( Matches[ 0 ] ) ) {
 				return null;
 			}
 
 			// Accept quoted arguments as-is
-			if ( match[ 3 ] ) {
-				match[ 2 ] = match[ 4 ] || match[ 5 ] || "";
+			if ( Matches[ 3 ] ) {
+				Matches[ 2 ] = Matches[ 4 ] || Matches[ 5 ] || "";
 
 			// Strip excess characters from unquoted arguments
 			} else if ( unquoted && rpseudo.test( unquoted ) &&
@@ -1883,12 +1883,12 @@ Expr = Sizzle.selectors = {
 				( excess = unquoted.indexOf( ")", unquoted.length - excess ) - unquoted.length ) ) {
 
 				// excess is a negative index
-				match[ 0 ] = match[ 0 ].slice( 0, excess );
-				match[ 2 ] = unquoted.slice( 0, excess );
+				Matches[ 0 ] = Matches[ 0 ].slice( 0, excess );
+				Matches[ 2 ] = unquoted.slice( 0, excess );
 			}
 
 			// Return only captures needed by the pseudo filter method (type and argument)
-			return match.slice( 0, 3 );
+			return Matches.slice( 0, 3 );
 		}
 	},
 
@@ -2104,13 +2104,13 @@ Expr = Sizzle.selectors = {
 			if ( fn.length > 1 ) {
 				args = [ pseudo, pseudo, "", argument ];
 				return Expr.setFilters.hasOwnProperty( pseudo.toLowerCase() ) ?
-					markFunction( function( seed, matches ) {
+					markFunction( function( seed, Matches ) {
 						var idx,
-							matched = fn( seed, argument ),
-							i = matched.length;
+							Matchesed = fn( seed, argument ),
+							i = Matchesed.length;
 						while ( i-- ) {
-							idx = indexOf( seed, matched[ i ] );
-							seed[ idx ] = !( matches[ idx ] = matched[ i ] );
+							idx = indexOf( seed, Matchesed[ i ] );
+							seed[ idx ] = !( Matches[ idx ] = Matchesed[ i ] );
 						}
 					} ) :
 					function( elem ) {
@@ -2132,24 +2132,24 @@ Expr = Sizzle.selectors = {
 			// spaces as combinators
 			var input = [],
 				results = [],
-				matcher = compile( selector.replace( rtrim, "$1" ) );
+				Matcheser = compile( selector.replace( rtrim, "$1" ) );
 
-			return matcher[ expando ] ?
-				markFunction( function( seed, matches, _context, xml ) {
+			return Matcheser[ expando ] ?
+				markFunction( function( seed, Matches, _context, xml ) {
 					var elem,
-						unmatched = matcher( seed, null, xml, [] ),
+						unMatchesed = Matcheser( seed, null, xml, [] ),
 						i = seed.length;
 
-					// Match elements unmatched by `matcher`
+					// Matches elements unMatchesed by `Matcheser`
 					while ( i-- ) {
-						if ( ( elem = unmatched[ i ] ) ) {
-							seed[ i ] = !( matches[ i ] = elem );
+						if ( ( elem = unMatchesed[ i ] ) ) {
+							seed[ i ] = !( Matches[ i ] = elem );
 						}
 					}
 				} ) :
 				function( elem, _context, xml ) {
 					input[ 0 ] = elem;
-					matcher( input, null, xml, results );
+					Matcheser( input, null, xml, results );
 
 					// Don't keep the element (issue #299)
 					input[ 0 ] = null;
@@ -2174,7 +2174,7 @@ Expr = Sizzle.selectors = {
 		// is based solely on the element's language value
 		// being equal to the identifier C,
 		// or beginning with the identifier C immediately followed by "-".
-		// The matching of C against the element's language value is performed case-insensitively.
+		// The Matchesing of C against the element's language value is performed case-insensitively.
 		// The identifier C does not have to be a valid language name."
 		// http://www.w3.org/TR/selectors/#lang-pseudo
 		"lang": markFunction( function( lang ) {
@@ -2289,48 +2289,48 @@ Expr = Sizzle.selectors = {
 			return [ 0 ];
 		} ),
 
-		"last": createPositionalPseudo( function( _matchIndexes, length ) {
+		"last": createPositionalPseudo( function( _MatchesIndexes, length ) {
 			return [ length - 1 ];
 		} ),
 
-		"eq": createPositionalPseudo( function( _matchIndexes, length, argument ) {
+		"eq": createPositionalPseudo( function( _MatchesIndexes, length, argument ) {
 			return [ argument < 0 ? argument + length : argument ];
 		} ),
 
-		"even": createPositionalPseudo( function( matchIndexes, length ) {
+		"even": createPositionalPseudo( function( MatchesIndexes, length ) {
 			var i = 0;
 			for ( ; i < length; i += 2 ) {
-				matchIndexes.push( i );
+				MatchesIndexes.push( i );
 			}
-			return matchIndexes;
+			return MatchesIndexes;
 		} ),
 
-		"odd": createPositionalPseudo( function( matchIndexes, length ) {
+		"odd": createPositionalPseudo( function( MatchesIndexes, length ) {
 			var i = 1;
 			for ( ; i < length; i += 2 ) {
-				matchIndexes.push( i );
+				MatchesIndexes.push( i );
 			}
-			return matchIndexes;
+			return MatchesIndexes;
 		} ),
 
-		"lt": createPositionalPseudo( function( matchIndexes, length, argument ) {
+		"lt": createPositionalPseudo( function( MatchesIndexes, length, argument ) {
 			var i = argument < 0 ?
 				argument + length :
 				argument > length ?
 					length :
 					argument;
 			for ( ; --i >= 0; ) {
-				matchIndexes.push( i );
+				MatchesIndexes.push( i );
 			}
-			return matchIndexes;
+			return MatchesIndexes;
 		} ),
 
-		"gt": createPositionalPseudo( function( matchIndexes, length, argument ) {
+		"gt": createPositionalPseudo( function( MatchesIndexes, length, argument ) {
 			var i = argument < 0 ? argument + length : argument;
 			for ( ; ++i < length; ) {
-				matchIndexes.push( i );
+				MatchesIndexes.push( i );
 			}
-			return matchIndexes;
+			return MatchesIndexes;
 		} )
 	}
 };
@@ -2351,7 +2351,7 @@ setFilters.prototype = Expr.filters = Expr.pseudos;
 Expr.setFilters = new setFilters();
 
 tokenize = Sizzle.tokenize = function( selector, parseOnly ) {
-	var matched, match, tokens, type,
+	var Matchesed, Matches, tokens, type,
 		soFar, groups, preFilters,
 		cached = tokenCache[ selector + " " ];
 
@@ -2366,44 +2366,44 @@ tokenize = Sizzle.tokenize = function( selector, parseOnly ) {
 	while ( soFar ) {
 
 		// Comma and first run
-		if ( !matched || ( match = rcomma.exec( soFar ) ) ) {
-			if ( match ) {
+		if ( !Matchesed || ( Matches = rcomma.exec( soFar ) ) ) {
+			if ( Matches ) {
 
 				// Don't consume trailing commas as valid
-				soFar = soFar.slice( match[ 0 ].length ) || soFar;
+				soFar = soFar.slice( Matches[ 0 ].length ) || soFar;
 			}
 			groups.push( ( tokens = [] ) );
 		}
 
-		matched = false;
+		Matchesed = false;
 
 		// Combinators
-		if ( ( match = rleadingCombinator.exec( soFar ) ) ) {
-			matched = match.shift();
+		if ( ( Matches = rleadingCombinator.exec( soFar ) ) ) {
+			Matchesed = Matches.shift();
 			tokens.push( {
-				value: matched,
+				value: Matchesed,
 
 				// Cast descendant combinators to space
-				type: match[ 0 ].replace( rtrim, " " )
+				type: Matches[ 0 ].replace( rtrim, " " )
 			} );
-			soFar = soFar.slice( matched.length );
+			soFar = soFar.slice( Matchesed.length );
 		}
 
 		// Filters
 		for ( type in Expr.filter ) {
-			if ( ( match = matchExpr[ type ].exec( soFar ) ) && ( !preFilters[ type ] ||
-				( match = preFilters[ type ]( match ) ) ) ) {
-				matched = match.shift();
+			if ( ( Matches = MatchesExpr[ type ].exec( soFar ) ) && ( !preFilters[ type ] ||
+				( Matches = preFilters[ type ]( Matches ) ) ) ) {
+				Matchesed = Matches.shift();
 				tokens.push( {
-					value: matched,
+					value: Matchesed,
 					type: type,
-					matches: match
+					Matches: Matches
 				} );
-				soFar = soFar.slice( matched.length );
+				soFar = soFar.slice( Matchesed.length );
 			}
 		}
 
-		if ( !matched ) {
+		if ( !Matchesed ) {
 			break;
 		}
 	}
@@ -2430,7 +2430,7 @@ function toSelector( tokens ) {
 	return selector;
 }
 
-function addCombinator( matcher, combinator, base ) {
+function addCombinator( Matcheser, combinator, base ) {
 	var dir = combinator.dir,
 		skip = combinator.next,
 		key = skip || dir,
@@ -2443,7 +2443,7 @@ function addCombinator( matcher, combinator, base ) {
 		function( elem, context, xml ) {
 			while ( ( elem = elem[ dir ] ) ) {
 				if ( elem.nodeType === 1 || checkNonElements ) {
-					return matcher( elem, context, xml );
+					return Matcheser( elem, context, xml );
 				}
 			}
 			return false;
@@ -2458,7 +2458,7 @@ function addCombinator( matcher, combinator, base ) {
 			if ( xml ) {
 				while ( ( elem = elem[ dir ] ) ) {
 					if ( elem.nodeType === 1 || checkNonElements ) {
-						if ( matcher( elem, context, xml ) ) {
+						if ( Matcheser( elem, context, xml ) ) {
 							return true;
 						}
 					}
@@ -2485,8 +2485,8 @@ function addCombinator( matcher, combinator, base ) {
 							// Reuse newcache so results back-propagate to previous elements
 							uniqueCache[ key ] = newCache;
 
-							// A match means we're done; a fail means we have to keep checking
-							if ( ( newCache[ 2 ] = matcher( elem, context, xml ) ) ) {
+							// A Matches means we're done; a fail means we have to keep checking
+							if ( ( newCache[ 2 ] = Matcheser( elem, context, xml ) ) ) {
 								return true;
 							}
 						}
@@ -2497,18 +2497,18 @@ function addCombinator( matcher, combinator, base ) {
 		};
 }
 
-function elementMatcher( matchers ) {
-	return matchers.length > 1 ?
+function elementMatcheser( Matchesers ) {
+	return Matchesers.length > 1 ?
 		function( elem, context, xml ) {
-			var i = matchers.length;
+			var i = Matchesers.length;
 			while ( i-- ) {
-				if ( !matchers[ i ]( elem, context, xml ) ) {
+				if ( !Matchesers[ i ]( elem, context, xml ) ) {
 					return false;
 				}
 			}
 			return true;
 		} :
-		matchers[ 0 ];
+		Matchesers[ 0 ];
 }
 
 function multipleContexts( selector, contexts, results ) {
@@ -2520,17 +2520,17 @@ function multipleContexts( selector, contexts, results ) {
 	return results;
 }
 
-function condense( unmatched, map, filter, context, xml ) {
+function condense( unMatchesed, map, filter, context, xml ) {
 	var elem,
-		newUnmatched = [],
+		newUnMatchesed = [],
 		i = 0,
-		len = unmatched.length,
+		len = unMatchesed.length,
 		mapped = map != null;
 
 	for ( ; i < len; i++ ) {
-		if ( ( elem = unmatched[ i ] ) ) {
+		if ( ( elem = unMatchesed[ i ] ) ) {
 			if ( !filter || filter( elem, context, xml ) ) {
-				newUnmatched.push( elem );
+				newUnMatchesed.push( elem );
 				if ( mapped ) {
 					map.push( i );
 				}
@@ -2538,15 +2538,15 @@ function condense( unmatched, map, filter, context, xml ) {
 		}
 	}
 
-	return newUnmatched;
+	return newUnMatchesed;
 }
 
-function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postSelector ) {
+function setMatcheser( preFilter, selector, Matcheser, postFilter, postFinder, postSelector ) {
 	if ( postFilter && !postFilter[ expando ] ) {
-		postFilter = setMatcher( postFilter );
+		postFilter = setMatcheser( postFilter );
 	}
 	if ( postFinder && !postFinder[ expando ] ) {
-		postFinder = setMatcher( postFinder, postSelector );
+		postFinder = setMatcheser( postFinder, postSelector );
 	}
 	return markFunction( function( seed, results, context, xml ) {
 		var temp, i, elem,
@@ -2561,12 +2561,12 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 				[]
 			),
 
-			// Prefilter to get matcher input, preserving a map for seed-results synchronization
-			matcherIn = preFilter && ( seed || !selector ) ?
+			// Prefilter to get Matcheser input, preserving a map for seed-results synchronization
+			MatcheserIn = preFilter && ( seed || !selector ) ?
 				condense( elems, preMap, preFilter, context, xml ) :
 				elems,
 
-			matcherOut = matcher ?
+			MatcheserOut = Matcheser ?
 
 				// If we have a postFinder, or filtered seed, or non-seed postFilter or preexisting results,
 				postFinder || ( seed ? preFilter : preexisting || postFilter ) ?
@@ -2576,23 +2576,23 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 
 					// ...otherwise use results directly
 					results :
-				matcherIn;
+				MatcheserIn;
 
-		// Find primary matches
-		if ( matcher ) {
-			matcher( matcherIn, matcherOut, context, xml );
+		// Find primary Matches
+		if ( Matcheser ) {
+			Matcheser( MatcheserIn, MatcheserOut, context, xml );
 		}
 
 		// Apply postFilter
 		if ( postFilter ) {
-			temp = condense( matcherOut, postMap );
+			temp = condense( MatcheserOut, postMap );
 			postFilter( temp, [], context, xml );
 
-			// Un-match failing elements by moving them back to matcherIn
+			// Un-Matches failing elements by moving them back to MatcheserIn
 			i = temp.length;
 			while ( i-- ) {
 				if ( ( elem = temp[ i ] ) ) {
-					matcherOut[ postMap[ i ] ] = !( matcherIn[ postMap[ i ] ] = elem );
+					MatcheserOut[ postMap[ i ] ] = !( MatcheserIn[ postMap[ i ] ] = elem );
 				}
 			}
 		}
@@ -2601,23 +2601,23 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 			if ( postFinder || preFilter ) {
 				if ( postFinder ) {
 
-					// Get the final matcherOut by condensing this intermediate into postFinder contexts
+					// Get the final MatcheserOut by condensing this intermediate into postFinder contexts
 					temp = [];
-					i = matcherOut.length;
+					i = MatcheserOut.length;
 					while ( i-- ) {
-						if ( ( elem = matcherOut[ i ] ) ) {
+						if ( ( elem = MatcheserOut[ i ] ) ) {
 
-							// Restore matcherIn since elem is not yet a final match
-							temp.push( ( matcherIn[ i ] = elem ) );
+							// Restore MatcheserIn since elem is not yet a final Matches
+							temp.push( ( MatcheserIn[ i ] = elem ) );
 						}
 					}
-					postFinder( null, ( matcherOut = [] ), temp, xml );
+					postFinder( null, ( MatcheserOut = [] ), temp, xml );
 				}
 
-				// Move matched elements from seed to results to keep them synchronized
-				i = matcherOut.length;
+				// Move Matchesed elements from seed to results to keep them synchronized
+				i = MatcheserOut.length;
 				while ( i-- ) {
-					if ( ( elem = matcherOut[ i ] ) &&
+					if ( ( elem = MatcheserOut[ i ] ) &&
 						( temp = postFinder ? indexOf( seed, elem ) : preMap[ i ] ) > -1 ) {
 
 						seed[ temp ] = !( results[ temp ] = elem );
@@ -2627,39 +2627,39 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 
 		// Add elements to results, through postFinder if defined
 		} else {
-			matcherOut = condense(
-				matcherOut === results ?
-					matcherOut.splice( preexisting, matcherOut.length ) :
-					matcherOut
+			MatcheserOut = condense(
+				MatcheserOut === results ?
+					MatcheserOut.splice( preexisting, MatcheserOut.length ) :
+					MatcheserOut
 			);
 			if ( postFinder ) {
-				postFinder( null, results, matcherOut, xml );
+				postFinder( null, results, MatcheserOut, xml );
 			} else {
-				push.apply( results, matcherOut );
+				push.apply( results, MatcheserOut );
 			}
 		}
 	} );
 }
 
-function matcherFromTokens( tokens ) {
-	var checkContext, matcher, j,
+function MatcheserFromTokens( tokens ) {
+	var checkContext, Matcheser, j,
 		len = tokens.length,
 		leadingRelative = Expr.relative[ tokens[ 0 ].type ],
 		implicitRelative = leadingRelative || Expr.relative[ " " ],
 		i = leadingRelative ? 1 : 0,
 
-		// The foundational matcher ensures that elements are reachable from top-level context(s)
-		matchContext = addCombinator( function( elem ) {
+		// The foundational Matcheser ensures that elements are reachable from top-level context(s)
+		MatchesContext = addCombinator( function( elem ) {
 			return elem === checkContext;
 		}, implicitRelative, true ),
-		matchAnyContext = addCombinator( function( elem ) {
+		MatchesAnyContext = addCombinator( function( elem ) {
 			return indexOf( checkContext, elem ) > -1;
 		}, implicitRelative, true ),
-		matchers = [ function( elem, context, xml ) {
+		Matchesers = [ function( elem, context, xml ) {
 			var ret = ( !leadingRelative && ( xml || context !== outermostContext ) ) || (
 				( checkContext = context ).nodeType ?
-					matchContext( elem, context, xml ) :
-					matchAnyContext( elem, context, xml ) );
+					MatchesContext( elem, context, xml ) :
+					MatchesAnyContext( elem, context, xml ) );
 
 			// Avoid hanging onto element (issue #299)
 			checkContext = null;
@@ -2667,13 +2667,13 @@ function matcherFromTokens( tokens ) {
 		} ];
 
 	for ( ; i < len; i++ ) {
-		if ( ( matcher = Expr.relative[ tokens[ i ].type ] ) ) {
-			matchers = [ addCombinator( elementMatcher( matchers ), matcher ) ];
+		if ( ( Matcheser = Expr.relative[ tokens[ i ].type ] ) ) {
+			Matchesers = [ addCombinator( elementMatcheser( Matchesers ), Matcheser ) ];
 		} else {
-			matcher = Expr.filter[ tokens[ i ].type ].apply( null, tokens[ i ].matches );
+			Matcheser = Expr.filter[ tokens[ i ].type ].apply( null, tokens[ i ].Matches );
 
-			// Return special upon seeing a positional matcher
-			if ( matcher[ expando ] ) {
+			// Return special upon seeing a positional Matcheser
+			if ( Matcheser[ expando ] ) {
 
 				// Find the next relative operator (if any) for proper handling
 				j = ++i;
@@ -2682,8 +2682,8 @@ function matcherFromTokens( tokens ) {
 						break;
 					}
 				}
-				return setMatcher(
-					i > 1 && elementMatcher( matchers ),
+				return setMatcheser(
+					i > 1 && elementMatcheser( Matchesers ),
 					i > 1 && toSelector(
 
 					// If the preceding token was a descendant combinator, insert an implicit any-element `*`
@@ -2691,34 +2691,34 @@ function matcherFromTokens( tokens ) {
 						.slice( 0, i - 1 )
 						.concat( { value: tokens[ i - 2 ].type === " " ? "*" : "" } )
 					).replace( rtrim, "$1" ),
-					matcher,
-					i < j && matcherFromTokens( tokens.slice( i, j ) ),
-					j < len && matcherFromTokens( ( tokens = tokens.slice( j ) ) ),
+					Matcheser,
+					i < j && MatcheserFromTokens( tokens.slice( i, j ) ),
+					j < len && MatcheserFromTokens( ( tokens = tokens.slice( j ) ) ),
 					j < len && toSelector( tokens )
 				);
 			}
-			matchers.push( matcher );
+			Matchesers.push( Matcheser );
 		}
 	}
 
-	return elementMatcher( matchers );
+	return elementMatcheser( Matchesers );
 }
 
-function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
-	var bySet = setMatchers.length > 0,
-		byElement = elementMatchers.length > 0,
-		superMatcher = function( seed, context, xml, results, outermost ) {
-			var elem, j, matcher,
-				matchedCount = 0,
+function MatcheserFromGroupMatchesers( elementMatchesers, setMatchesers ) {
+	var bySet = setMatchesers.length > 0,
+		byElement = elementMatchesers.length > 0,
+		superMatcheser = function( seed, context, xml, results, outermost ) {
+			var elem, j, Matcheser,
+				MatchesedCount = 0,
 				i = "0",
-				unmatched = seed && [],
-				setMatched = [],
+				unMatchesed = seed && [],
+				setMatchesed = [],
 				contextBackup = outermostContext,
 
 				// We must always have either seed elements or outermost context
 				elems = seed || byElement && Expr.find[ "TAG" ]( "*", outermost ),
 
-				// Use integer dirruns iff this is the outermost matcher
+				// Use integer dirruns iff this is the outermost Matcheser
 				dirrunsUnique = ( dirruns += contextBackup == null ? 1 : Math.random() || 0.1 ),
 				len = elems.length;
 
@@ -2731,9 +2731,9 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 				outermostContext = context == document || context || outermost;
 			}
 
-			// Add elements passing elementMatchers directly to results
+			// Add elements passing elementMatchesers directly to results
 			// Support: IE<9, Safari
-			// Tolerate NodeList properties (IE: "length"; Safari: <number>) matching elements by id
+			// Tolerate NodeList properties (IE: "length"; Safari: <number>) Matchesing elements by id
 			for ( ; i !== len && ( elem = elems[ i ] ) != null; i++ ) {
 				if ( byElement && elem ) {
 					j = 0;
@@ -2746,8 +2746,8 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 						setDocument( elem );
 						xml = !documentIsHTML;
 					}
-					while ( ( matcher = elementMatchers[ j++ ] ) ) {
-						if ( matcher( elem, context || document, xml ) ) {
+					while ( ( Matcheser = elementMatchesers[ j++ ] ) ) {
+						if ( Matcheser( elem, context || document, xml ) ) {
 							results.push( elem );
 							break;
 						}
@@ -2757,104 +2757,104 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 					}
 				}
 
-				// Track unmatched elements for set filters
+				// Track unMatchesed elements for set filters
 				if ( bySet ) {
 
-					// They will have gone through all possible matchers
-					if ( ( elem = !matcher && elem ) ) {
-						matchedCount--;
+					// They will have gone through all possible Matchesers
+					if ( ( elem = !Matcheser && elem ) ) {
+						MatchesedCount--;
 					}
 
-					// Lengthen the array for every element, matched or not
+					// Lengthen the array for every element, Matchesed or not
 					if ( seed ) {
-						unmatched.push( elem );
+						unMatchesed.push( elem );
 					}
 				}
 			}
 
-			// `i` is now the count of elements visited above, and adding it to `matchedCount`
+			// `i` is now the count of elements visited above, and adding it to `MatchesedCount`
 			// makes the latter nonnegative.
-			matchedCount += i;
+			MatchesedCount += i;
 
-			// Apply set filters to unmatched elements
-			// NOTE: This can be skipped if there are no unmatched elements (i.e., `matchedCount`
+			// Apply set filters to unMatchesed elements
+			// NOTE: This can be skipped if there are no unMatchesed elements (i.e., `MatchesedCount`
 			// equals `i`), unless we didn't visit _any_ elements in the above loop because we have
-			// no element matchers and no seed.
+			// no element Matchesers and no seed.
 			// Incrementing an initially-string "0" `i` allows `i` to remain a string only in that
-			// case, which will result in a "00" `matchedCount` that differs from `i` but is also
+			// case, which will result in a "00" `MatchesedCount` that differs from `i` but is also
 			// numerically zero.
-			if ( bySet && i !== matchedCount ) {
+			if ( bySet && i !== MatchesedCount ) {
 				j = 0;
-				while ( ( matcher = setMatchers[ j++ ] ) ) {
-					matcher( unmatched, setMatched, context, xml );
+				while ( ( Matcheser = setMatchesers[ j++ ] ) ) {
+					Matcheser( unMatchesed, setMatchesed, context, xml );
 				}
 
 				if ( seed ) {
 
-					// Reintegrate element matches to eliminate the need for sorting
-					if ( matchedCount > 0 ) {
+					// Reintegrate element Matches to eliminate the need for sorting
+					if ( MatchesedCount > 0 ) {
 						while ( i-- ) {
-							if ( !( unmatched[ i ] || setMatched[ i ] ) ) {
-								setMatched[ i ] = pop.call( results );
+							if ( !( unMatchesed[ i ] || setMatchesed[ i ] ) ) {
+								setMatchesed[ i ] = pop.call( results );
 							}
 						}
 					}
 
-					// Discard index placeholder values to get only actual matches
-					setMatched = condense( setMatched );
+					// Discard index placeholder values to get only actual Matches
+					setMatchesed = condense( setMatchesed );
 				}
 
-				// Add matches to results
-				push.apply( results, setMatched );
+				// Add Matches to results
+				push.apply( results, setMatchesed );
 
-				// Seedless set matches succeeding multiple successful matchers stipulate sorting
-				if ( outermost && !seed && setMatched.length > 0 &&
-					( matchedCount + setMatchers.length ) > 1 ) {
+				// Seedless set Matches succeeding multiple successful Matchesers stipulate sorting
+				if ( outermost && !seed && setMatchesed.length > 0 &&
+					( MatchesedCount + setMatchesers.length ) > 1 ) {
 
 					Sizzle.uniqueSort( results );
 				}
 			}
 
-			// Override manipulation of globals by nested matchers
+			// Override manipulation of globals by nested Matchesers
 			if ( outermost ) {
 				dirruns = dirrunsUnique;
 				outermostContext = contextBackup;
 			}
 
-			return unmatched;
+			return unMatchesed;
 		};
 
 	return bySet ?
-		markFunction( superMatcher ) :
-		superMatcher;
+		markFunction( superMatcheser ) :
+		superMatcheser;
 }
 
-compile = Sizzle.compile = function( selector, match /* Internal Use Only */ ) {
+compile = Sizzle.compile = function( selector, Matches /* Internal Use Only */ ) {
 	var i,
-		setMatchers = [],
-		elementMatchers = [],
+		setMatchesers = [],
+		elementMatchesers = [],
 		cached = compilerCache[ selector + " " ];
 
 	if ( !cached ) {
 
 		// Generate a function of recursive functions that can be used to check each element
-		if ( !match ) {
-			match = tokenize( selector );
+		if ( !Matches ) {
+			Matches = tokenize( selector );
 		}
-		i = match.length;
+		i = Matches.length;
 		while ( i-- ) {
-			cached = matcherFromTokens( match[ i ] );
+			cached = MatcheserFromTokens( Matches[ i ] );
 			if ( cached[ expando ] ) {
-				setMatchers.push( cached );
+				setMatchesers.push( cached );
 			} else {
-				elementMatchers.push( cached );
+				elementMatchesers.push( cached );
 			}
 		}
 
 		// Cache the compiled function
 		cached = compilerCache(
 			selector,
-			matcherFromGroupMatchers( elementMatchers, setMatchers )
+			MatcheserFromGroupMatchesers( elementMatchesers, setMatchesers )
 		);
 
 		// Save selector and tokenization
@@ -2870,30 +2870,30 @@ compile = Sizzle.compile = function( selector, match /* Internal Use Only */ ) {
  *  selector function built with Sizzle.compile
  * @param {Element} context
  * @param {Array} [results]
- * @param {Array} [seed] A set of elements to match against
+ * @param {Array} [seed] A set of elements to Matches against
  */
 select = Sizzle.select = function( selector, context, results, seed ) {
 	var i, tokens, token, type, find,
 		compiled = typeof selector === "function" && selector,
-		match = !seed && tokenize( ( selector = compiled.selector || selector ) );
+		Matches = !seed && tokenize( ( selector = compiled.selector || selector ) );
 
 	results = results || [];
 
 	// Try to minimize operations if there is only one selector in the list and no seed
 	// (the latter of which guarantees us context)
-	if ( match.length === 1 ) {
+	if ( Matches.length === 1 ) {
 
 		// Reduce context if the leading compound selector is an ID
-		tokens = match[ 0 ] = match[ 0 ].slice( 0 );
+		tokens = Matches[ 0 ] = Matches[ 0 ].slice( 0 );
 		if ( tokens.length > 2 && ( token = tokens[ 0 ] ).type === "ID" &&
 			context.nodeType === 9 && documentIsHTML && Expr.relative[ tokens[ 1 ].type ] ) {
 
-			context = ( Expr.find[ "ID" ]( token.matches[ 0 ]
+			context = ( Expr.find[ "ID" ]( token.Matches[ 0 ]
 				.replace( runescape, funescape ), context ) || [] )[ 0 ];
 			if ( !context ) {
 				return results;
 
-			// Precompiled matchers will still verify ancestry, so step up a level
+			// Precompiled Matchesers will still verify ancestry, so step up a level
 			} else if ( compiled ) {
 				context = context.parentNode;
 			}
@@ -2901,8 +2901,8 @@ select = Sizzle.select = function( selector, context, results, seed ) {
 			selector = selector.slice( tokens.shift().value.length );
 		}
 
-		// Fetch a seed set for right-to-left matching
-		i = matchExpr[ "needsContext" ].test( selector ) ? 0 : tokens.length;
+		// Fetch a seed set for right-to-left Matchesing
+		i = MatchesExpr[ "needsContext" ].test( selector ) ? 0 : tokens.length;
 		while ( i-- ) {
 			token = tokens[ i ];
 
@@ -2914,7 +2914,7 @@ select = Sizzle.select = function( selector, context, results, seed ) {
 
 				// Search, expanding context for leading sibling combinators
 				if ( ( seed = find(
-					token.matches[ 0 ].replace( runescape, funescape ),
+					token.Matches[ 0 ].replace( runescape, funescape ),
 					rsibling.test( tokens[ 0 ].type ) && testContext( context.parentNode ) ||
 						context
 				) ) ) {
@@ -2934,8 +2934,8 @@ select = Sizzle.select = function( selector, context, results, seed ) {
 	}
 
 	// Compile and execute a filtering function if one is not provided
-	// Provide `match` to avoid retokenization if we modified the selector above
-	( compiled || compile( selector, match ) )(
+	// Provide `Matches` to avoid retokenization if we modified the selector above
+	( compiled || compile( selector, Matches ) )(
 		seed,
 		context,
 		!documentIsHTML,
@@ -3030,7 +3030,7 @@ jQuery.escapeSelector = Sizzle.escape;
 
 
 var dir = function( elem, dir, until ) {
-	var matched = [],
+	var Matchesed = [],
 		truncate = until !== undefined;
 
 	while ( ( elem = elem[ dir ] ) && elem.nodeType !== 9 ) {
@@ -3038,27 +3038,27 @@ var dir = function( elem, dir, until ) {
 			if ( truncate && jQuery( elem ).is( until ) ) {
 				break;
 			}
-			matched.push( elem );
+			Matchesed.push( elem );
 		}
 	}
-	return matched;
+	return Matchesed;
 };
 
 
 var siblings = function( n, elem ) {
-	var matched = [];
+	var Matchesed = [];
 
 	for ( ; n; n = n.nextSibling ) {
 		if ( n.nodeType === 1 && n !== elem ) {
-			matched.push( n );
+			Matchesed.push( n );
 		}
 	}
 
-	return matched;
+	return Matchesed;
 };
 
 
-var rneedsContext = jQuery.expr.match.needsContext;
+var rneedsContext = jQuery.expr.Matches.needsContext;
 
 
 
@@ -3105,10 +3105,10 @@ jQuery.filter = function( expr, elems, not ) {
 	}
 
 	if ( elems.length === 1 && elem.nodeType === 1 ) {
-		return jQuery.find.matchesSelector( elem, expr ) ? [ elem ] : [];
+		return jQuery.find.MatchesSelector( elem, expr ) ? [ elem ] : [];
 	}
 
-	return jQuery.find.matches( expr, jQuery.grep( elems, function( elem ) {
+	return jQuery.find.Matches( expr, jQuery.grep( elems, function( elem ) {
 		return elem.nodeType === 1;
 	} ) );
 };
@@ -3171,7 +3171,7 @@ var rootjQuery,
 	rquickExpr = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]+))$/,
 
 	init = jQuery.fn.init = function( selector, context, root ) {
-		var match, elem;
+		var Matches, elem;
 
 		// HANDLE: $(""), $(null), $(undefined), $(false)
 		if ( !selector ) {
@@ -3189,38 +3189,38 @@ var rootjQuery,
 				selector.length >= 3 ) {
 
 				// Assume that strings that start and end with <> are HTML and skip the regex check
-				match = [ null, selector, null ];
+				Matches = [ null, selector, null ];
 
 			} else {
-				match = rquickExpr.exec( selector );
+				Matches = rquickExpr.exec( selector );
 			}
 
-			// Match html or make sure no context is specified for #id
-			if ( match && ( match[ 1 ] || !context ) ) {
+			// Matches html or make sure no context is specified for #id
+			if ( Matches && ( Matches[ 1 ] || !context ) ) {
 
 				// HANDLE: $(html) -> $(array)
-				if ( match[ 1 ] ) {
+				if ( Matches[ 1 ] ) {
 					context = context instanceof jQuery ? context[ 0 ] : context;
 
 					// Option to run scripts is true for back-compat
 					// Intentionally let the error be thrown if parseHTML is not present
 					jQuery.merge( this, jQuery.parseHTML(
-						match[ 1 ],
+						Matches[ 1 ],
 						context && context.nodeType ? context.ownerDocument || context : document,
 						true
 					) );
 
 					// HANDLE: $(html, props)
-					if ( rsingleTag.test( match[ 1 ] ) && jQuery.isPlainObject( context ) ) {
-						for ( match in context ) {
+					if ( rsingleTag.test( Matches[ 1 ] ) && jQuery.isPlainObject( context ) ) {
+						for ( Matches in context ) {
 
 							// Properties of context are called as methods if possible
-							if ( isFunction( this[ match ] ) ) {
-								this[ match ]( context[ match ] );
+							if ( isFunction( this[ Matches ] ) ) {
+								this[ Matches ]( context[ Matches ] );
 
 							// ...and otherwise set as attributes
 							} else {
-								this.attr( match, context[ match ] );
+								this.attr( Matches, context[ Matches ] );
 							}
 						}
 					}
@@ -3229,7 +3229,7 @@ var rootjQuery,
 
 				// HANDLE: $(#id)
 				} else {
-					elem = document.getElementById( match[ 2 ] );
+					elem = document.getElementById( Matches[ 2 ] );
 
 					if ( elem ) {
 
@@ -3305,10 +3305,10 @@ jQuery.fn.extend( {
 		var cur,
 			i = 0,
 			l = this.length,
-			matched = [],
+			Matchesed = [],
 			targets = typeof selectors !== "string" && jQuery( selectors );
 
-		// Positional selectors never match, since there's no _selection_ context
+		// Positional selectors never Matches, since there's no _selection_ context
 		if ( !rneedsContext.test( selectors ) ) {
 			for ( ; i < l; i++ ) {
 				for ( cur = this[ i ]; cur && cur !== context; cur = cur.parentNode ) {
@@ -3319,16 +3319,16 @@ jQuery.fn.extend( {
 
 						// Don't pass non-elements to Sizzle
 						cur.nodeType === 1 &&
-							jQuery.find.matchesSelector( cur, selectors ) ) ) {
+							jQuery.find.MatchesSelector( cur, selectors ) ) ) {
 
-						matched.push( cur );
+						Matchesed.push( cur );
 						break;
 					}
 				}
 			}
 		}
 
-		return this.pushStack( matched.length > 1 ? jQuery.uniqueSort( matched ) : matched );
+		return this.pushStack( Matchesed.length > 1 ? jQuery.uniqueSort( Matchesed ) : Matchesed );
 	},
 
 	// Determine the position of an element within the set
@@ -3429,30 +3429,30 @@ jQuery.each( {
 	}
 }, function( name, fn ) {
 	jQuery.fn[ name ] = function( until, selector ) {
-		var matched = jQuery.map( this, fn, until );
+		var Matchesed = jQuery.map( this, fn, until );
 
 		if ( name.slice( -5 ) !== "Until" ) {
 			selector = until;
 		}
 
 		if ( selector && typeof selector === "string" ) {
-			matched = jQuery.filter( selector, matched );
+			Matchesed = jQuery.filter( selector, Matchesed );
 		}
 
 		if ( this.length > 1 ) {
 
 			// Remove duplicates
 			if ( !guaranteedUnique[ name ] ) {
-				jQuery.uniqueSort( matched );
+				jQuery.uniqueSort( Matchesed );
 			}
 
 			// Reverse order for parents* and prev-derivatives
 			if ( rparentsprev.test( name ) ) {
-				matched.reverse();
+				Matchesed.reverse();
 			}
 		}
 
-		return this.pushStack( matched );
+		return this.pushStack( Matchesed );
 	};
 } );
 var rnothtmlwhite = ( /[^\x20\t\r\n\f]+/g );
@@ -3462,7 +3462,7 @@ var rnothtmlwhite = ( /[^\x20\t\r\n\f]+/g );
 // Convert String-formatted options into Object-formatted ones
 function createOptions( options ) {
 	var object = {};
-	jQuery.each( options.match( rnothtmlwhite ) || [], function( _, flag ) {
+	jQuery.each( options.Matches( rnothtmlwhite ) || [], function( _, flag ) {
 		object[ flag ] = true;
 	} );
 	return object;
@@ -4387,10 +4387,10 @@ Data.prototype = {
 				key = camelCase( key );
 
 				// If a key with the spaces exists, use it.
-				// Otherwise, create an array by matching non-whitespace
+				// Otherwise, create an array by Matchesing non-whitespace
 				key = key in cache ?
 					[ key ] :
-					( key.match( rnothtmlwhite ) || [] );
+					( key.Matches( rnothtmlwhite ) || [] );
 			}
 
 			i = key.length;
@@ -4552,7 +4552,7 @@ jQuery.fn.extend( {
 		return access( this, function( value ) {
 			var data;
 
-			// The calling jQuery object (element matches) is not empty
+			// The calling jQuery object (element Matches) is not empty
 			// (and therefore has an element appears at this[ 0 ]) and the
 			// `value` parameter was not undefined. An empty jQuery object
 			// will result in `undefined` for elem = this[ 0 ] which will
@@ -4788,7 +4788,7 @@ function adjustCSS( elem, prop, valueParts, tween ) {
 		initial = currentValue(),
 		unit = valueParts && valueParts[ 3 ] || ( jQuery.cssNumber[ prop ] ? "" : "px" ),
 
-		// Starting value computation is required for potential unit mismatches
+		// Starting value computation is required for potential unit misMatches
 		initialInUnit = elem.nodeType &&
 			( jQuery.cssNumber[ prop ] || unit !== "px" && +initial ) &&
 			rcssNum.exec( jQuery.css( elem, prop ) );
@@ -5249,7 +5249,7 @@ jQuery.event = {
 		// Ensure that invalid selectors throw exceptions at attach time
 		// Evaluate against documentElement in case elem is a non-element node (e.g., document)
 		if ( selector ) {
-			jQuery.find.matchesSelector( documentElement, selector );
+			jQuery.find.MatchesSelector( documentElement, selector );
 		}
 
 		// Make sure that the handler has a unique ID, used to find/remove it later
@@ -5272,7 +5272,7 @@ jQuery.event = {
 		}
 
 		// Handle multiple events separated by a space
-		types = ( types || "" ).match( rnothtmlwhite ) || [ "" ];
+		types = ( types || "" ).Matches( rnothtmlwhite ) || [ "" ];
 		t = types.length;
 		while ( t-- ) {
 			tmp = rtypenamespace.exec( types[ t ] ) || [];
@@ -5301,7 +5301,7 @@ jQuery.event = {
 				handler: handler,
 				guid: handler.guid,
 				selector: selector,
-				needsContext: selector && jQuery.expr.match.needsContext.test( selector ),
+				needsContext: selector && jQuery.expr.Matches.needsContext.test( selector ),
 				namespace: namespaces.join( "." )
 			}, handleObjIn );
 
@@ -5354,7 +5354,7 @@ jQuery.event = {
 		}
 
 		// Once for each type.namespace in types; type may be omitted
-		types = ( types || "" ).match( rnothtmlwhite ) || [ "" ];
+		types = ( types || "" ).Matches( rnothtmlwhite ) || [ "" ];
 		t = types.length;
 		while ( t-- ) {
 			tmp = rtypenamespace.exec( types[ t ] ) || [];
@@ -5375,7 +5375,7 @@ jQuery.event = {
 			tmp = tmp[ 2 ] &&
 				new RegExp( "(^|\\.)" + namespaces.join( "\\.(?:.*\\.|)" ) + "(\\.|$)" );
 
-			// Remove matching events
+			// Remove Matchesing events
 			origCount = j = handlers.length;
 			while ( j-- ) {
 				handleObj = handlers[ j ];
@@ -5417,7 +5417,7 @@ jQuery.event = {
 
 	dispatch: function( nativeEvent ) {
 
-		var i, j, ret, matched, handleObj, handlerQueue,
+		var i, j, ret, Matchesed, handleObj, handlerQueue,
 			args = new Array( arguments.length ),
 
 			// Make a writable jQuery.Event from the native event object
@@ -5447,11 +5447,11 @@ jQuery.event = {
 
 		// Run delegates first; they may want to stop propagation beneath us
 		i = 0;
-		while ( ( matched = handlerQueue[ i++ ] ) && !event.isPropagationStopped() ) {
-			event.currentTarget = matched.elem;
+		while ( ( Matchesed = handlerQueue[ i++ ] ) && !event.isPropagationStopped() ) {
+			event.currentTarget = Matchesed.elem;
 
 			j = 0;
-			while ( ( handleObj = matched.handlers[ j++ ] ) &&
+			while ( ( handleObj = Matchesed.handlers[ j++ ] ) &&
 				!event.isImmediatePropagationStopped() ) {
 
 				// If the event is namespaced, then each handler is only invoked if it is
@@ -5463,7 +5463,7 @@ jQuery.event = {
 					event.data = handleObj.data;
 
 					ret = ( ( jQuery.event.special[ handleObj.origType ] || {} ).handle ||
-						handleObj.handler ).apply( matched.elem, args );
+						handleObj.handler ).apply( Matchesed.elem, args );
 
 					if ( ret !== undefined ) {
 						if ( ( event.result = ret ) === false ) {
@@ -5484,7 +5484,7 @@ jQuery.event = {
 	},
 
 	handlers: function( event, handlers ) {
-		var i, handleObj, sel, matchedHandlers, matchedSelectors,
+		var i, handleObj, sel, MatchesedHandlers, MatchesedSelectors,
 			handlerQueue = [],
 			delegateCount = handlers.delegateCount,
 			cur = event.target;
@@ -5508,25 +5508,25 @@ jQuery.event = {
 				// Don't check non-elements (trac-13208)
 				// Don't process clicks on disabled elements (trac-6911, trac-8165, trac-11382, trac-11764)
 				if ( cur.nodeType === 1 && !( event.type === "click" && cur.disabled === true ) ) {
-					matchedHandlers = [];
-					matchedSelectors = {};
+					MatchesedHandlers = [];
+					MatchesedSelectors = {};
 					for ( i = 0; i < delegateCount; i++ ) {
 						handleObj = handlers[ i ];
 
 						// Don't conflict with Object.prototype properties (trac-13203)
 						sel = handleObj.selector + " ";
 
-						if ( matchedSelectors[ sel ] === undefined ) {
-							matchedSelectors[ sel ] = handleObj.needsContext ?
+						if ( MatchesedSelectors[ sel ] === undefined ) {
+							MatchesedSelectors[ sel ] = handleObj.needsContext ?
 								jQuery( sel, this ).index( cur ) > -1 :
 								jQuery.find( sel, this, null, [ cur ] ).length;
 						}
-						if ( matchedSelectors[ sel ] ) {
-							matchedHandlers.push( handleObj );
+						if ( MatchesedSelectors[ sel ] ) {
+							MatchesedHandlers.push( handleObj );
 						}
 					}
-					if ( matchedHandlers.length ) {
-						handlerQueue.push( { elem: cur, handlers: matchedHandlers } );
+					if ( MatchesedHandlers.length ) {
+						handlerQueue.push( { elem: cur, handlers: MatchesedHandlers } );
 					}
 				}
 			}
@@ -6782,11 +6782,11 @@ function setPositiveNumber( _elem, value, subtract ) {
 
 	// Any relative (+/-) values have already been
 	// normalized at this point
-	var matches = rcssNum.exec( value );
-	return matches ?
+	var Matches = rcssNum.exec( value );
+	return Matches ?
 
 		// Guard against undefined "subtract", e.g., when used as in cssHooks
-		Math.max( 0, matches[ 2 ] - ( subtract || 0 ) ) + ( matches[ 3 ] || "px" ) :
+		Math.max( 0, Matches[ 2 ] - ( subtract || 0 ) ) + ( Matches[ 3 ] || "px" ) :
 		value;
 }
 
@@ -7121,7 +7121,7 @@ jQuery.each( [ "height", "width" ], function( _i, dimension ) {
 		},
 
 		set: function( elem, value, extra ) {
-			var matches,
+			var Matches,
 				styles = getStyles( elem ),
 
 				// Only read styles.position if the test has a chance to fail
@@ -7155,8 +7155,8 @@ jQuery.each( [ "height", "width" ], function( _i, dimension ) {
 			}
 
 			// Convert to pixels if value adjustment is needed
-			if ( subtract && ( matches = rcssNum.exec( value ) ) &&
-				( matches[ 3 ] || "px" ) !== "px" ) {
+			if ( subtract && ( Matches = rcssNum.exec( value ) ) &&
+				( Matches[ 3 ] || "px" ) !== "px" ) {
 
 				elem.style[ dimension ] = value;
 				value = jQuery.css( elem, dimension );
@@ -7291,7 +7291,7 @@ Tween.propHooks = {
 			var result;
 
 			// Use a property on the element directly when it is not a DOM element,
-			// or when there is no matching style property that exists.
+			// or when there is no Matchesing style property that exists.
 			if ( tween.elem.nodeType !== 1 ||
 				tween.elem[ tween.prop ] != null && tween.elem.style[ tween.prop ] == null ) {
 				return tween.elem[ tween.prop ];
@@ -7628,7 +7628,7 @@ function Animation( elem, properties, options ) {
 		length = Animation.prefilters.length,
 		deferred = jQuery.Deferred().always( function() {
 
-			// Don't match elem in the :animated selector
+			// Don't Matches elem in the :animated selector
 			delete tick.elem;
 		} ),
 		tick = function() {
@@ -7761,7 +7761,7 @@ jQuery.Animation = jQuery.extend( Animation, {
 			callback = props;
 			props = [ "*" ];
 		} else {
-			props = props.match( rnothtmlwhite );
+			props = props.Matches( rnothtmlwhite );
 		}
 
 		var prop,
@@ -8100,7 +8100,7 @@ jQuery.extend( {
 		// Grab necessary hook if one is defined
 		if ( nType !== 1 || !jQuery.isXMLDoc( elem ) ) {
 			hooks = jQuery.attrHooks[ name.toLowerCase() ] ||
-				( jQuery.expr.match.bool.test( name ) ? boolHook : undefined );
+				( jQuery.expr.Matches.bool.test( name ) ? boolHook : undefined );
 		}
 
 		if ( value !== undefined ) {
@@ -8150,7 +8150,7 @@ jQuery.extend( {
 
 			// Attribute names can contain non-HTML whitespace characters
 			// https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
-			attrNames = value && value.match( rnothtmlwhite );
+			attrNames = value && value.Matches( rnothtmlwhite );
 
 		if ( attrNames && elem.nodeType === 1 ) {
 			while ( ( name = attrNames[ i++ ] ) ) {
@@ -8174,7 +8174,7 @@ boolHook = {
 	}
 };
 
-jQuery.each( jQuery.expr.match.bool.source.match( /\w+/g ), function( _i, name ) {
+jQuery.each( jQuery.expr.Matches.bool.source.Matches( /\w+/g ), function( _i, name ) {
 	var getter = attrHandle[ name ] || jQuery.find.attr;
 
 	attrHandle[ name ] = function( elem, name, isXML ) {
@@ -8336,7 +8336,7 @@ jQuery.each( [
 	// Strip and collapse whitespace according to HTML spec
 	// https://infra.spec.whatwg.org/#strip-and-collapse-ascii-whitespace
 	function stripAndCollapse( value ) {
-		var tokens = value.match( rnothtmlwhite ) || [];
+		var tokens = value.Matches( rnothtmlwhite ) || [];
 		return tokens.join( " " );
 	}
 
@@ -8350,7 +8350,7 @@ function classesToArray( value ) {
 		return value;
 	}
 	if ( typeof value === "string" ) {
-		return value.match( rnothtmlwhite ) || [];
+		return value.Matches( rnothtmlwhite ) || [];
 	}
 	return [];
 }
@@ -8668,7 +8668,7 @@ jQuery.extend( {
 					/* eslint-enable no-cond-assign */
 				}
 
-				// Force browsers to behave consistently when non-matching value is set
+				// Force browsers to behave consistently when non-Matchesing value is set
 				if ( !optionSet ) {
 					elem.selectedIndex = -1;
 				}
@@ -8731,7 +8731,7 @@ jQuery.extend( jQuery.event, {
 
 		if ( type.indexOf( "." ) > -1 ) {
 
-			// Namespaced trigger; create a regexp to match event type in handle()
+			// Namespaced trigger; create a regexp to Matches event type in handle()
 			namespaces = type.split( "." );
 			type = namespaces.shift();
 			namespaces.sort();
@@ -9138,7 +9138,7 @@ function addToPrefiltersOrTransports( structure ) {
 
 		var dataType,
 			i = 0,
-			dataTypes = dataTypeExpression.toLowerCase().match( rnothtmlwhite ) || [];
+			dataTypes = dataTypeExpression.toLowerCase().Matches( rnothtmlwhite ) || [];
 
 		if ( isFunction( func ) ) {
 
@@ -9527,19 +9527,19 @@ jQuery.extend( {
 
 				// Builds headers hashtable if needed
 				getResponseHeader: function( key ) {
-					var match;
+					var Matches;
 					if ( completed ) {
 						if ( !responseHeaders ) {
 							responseHeaders = {};
-							while ( ( match = rheaders.exec( responseHeadersString ) ) ) {
-								responseHeaders[ match[ 1 ].toLowerCase() + " " ] =
-									( responseHeaders[ match[ 1 ].toLowerCase() + " " ] || [] )
-										.concat( match[ 2 ] );
+							while ( ( Matches = rheaders.exec( responseHeadersString ) ) ) {
+								responseHeaders[ Matches[ 1 ].toLowerCase() + " " ] =
+									( responseHeaders[ Matches[ 1 ].toLowerCase() + " " ] || [] )
+										.concat( Matches[ 2 ] );
 							}
 						}
-						match = responseHeaders[ key.toLowerCase() + " " ];
+						Matches = responseHeaders[ key.toLowerCase() + " " ];
 					}
-					return match == null ? null : match.join( ", " );
+					return Matches == null ? null : Matches.join( ", " );
 				},
 
 				// Raw string
@@ -9608,9 +9608,9 @@ jQuery.extend( {
 		s.type = options.method || options.type || s.method || s.type;
 
 		// Extract dataTypes list
-		s.dataTypes = ( s.dataType || "*" ).toLowerCase().match( rnothtmlwhite ) || [ "" ];
+		s.dataTypes = ( s.dataType || "*" ).toLowerCase().Matches( rnothtmlwhite ) || [ "" ];
 
-		// A cross-domain request is in order when the origin doesn't match the current origin.
+		// A cross-domain request is in order when the origin doesn't Matches the current origin.
 		if ( s.crossDomain == null ) {
 			urlAnchor = document.createElement( "a" );
 
@@ -9662,7 +9662,7 @@ jQuery.extend( {
 		s.hasContent = !rnoContent.test( s.type );
 
 		// Save the URL in case we're toying with the If-Modified-Since
-		// and/or If-None-Match header later on
+		// and/or If-None-Matches header later on
 		// Remove hash to simplify url manipulation
 		cacheURL = s.url.replace( rhash, "" );
 
@@ -9696,13 +9696,13 @@ jQuery.extend( {
 			s.data = s.data.replace( r20, "+" );
 		}
 
-		// Set the If-Modified-Since and/or If-None-Match header, if in ifModified mode.
+		// Set the If-Modified-Since and/or If-None-Matches header, if in ifModified mode.
 		if ( s.ifModified ) {
 			if ( jQuery.lastModified[ cacheURL ] ) {
 				jqXHR.setRequestHeader( "If-Modified-Since", jQuery.lastModified[ cacheURL ] );
 			}
 			if ( jQuery.etag[ cacheURL ] ) {
-				jqXHR.setRequestHeader( "If-None-Match", jQuery.etag[ cacheURL ] );
+				jqXHR.setRequestHeader( "If-None-Matches", jQuery.etag[ cacheURL ] );
 			}
 		}
 
@@ -9830,7 +9830,7 @@ jQuery.extend( {
 			// If successful, handle type chaining
 			if ( isSuccess ) {
 
-				// Set the If-Modified-Since and/or If-None-Match header, if in ifModified mode.
+				// Set the If-Modified-Since and/or If-None-Matches header, if in ifModified mode.
 				if ( s.ifModified ) {
 					modified = jqXHR.getResponseHeader( "Last-Modified" );
 					if ( modified ) {
@@ -10836,7 +10836,7 @@ jQuery.each(
 // Support: Android <=4.0 only
 // Make sure we trim BOM and NBSP
 // Require that the "whitespace run" starts from a non-whitespace
-// to avoid O(N^2) behavior when the engine would try matching "\s+$" at each space position.
+// to avoid O(N^2) behavior when the engine would try Matchesing "\s+$" at each space position.
 var rtrim = /^[\s\uFEFF\xA0]+|([^\s\uFEFF\xA0])[\s\uFEFF\xA0]+$/g;
 
 // Bind a function to a context, optionally partially applying any

@@ -8,7 +8,7 @@ Requires core.js and SelectBox.js.
 {
     window.SelectFilter = {
         init: function(field_id, field_name, is_stacked) {
-            if (field_id.match(/__prefix__/)) {
+            if (field_id.Matches(/__prefix__/)) {
                 // Don't initialize on empty forms.
                 return;
             }
